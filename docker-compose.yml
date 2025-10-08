@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Backend API
+  api:
+    build: .
+    container_name: fadex-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./results:/app/results
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Web
+  frontend:
+    image: nginx:alpine
+    container_name: fadex-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./src/frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+
+networks:
+  default:
+    name: fadex-network

@@ -81,3 +81,11 @@ credentials/
 *.zip
 *.tar.gz
 *.rar
+
+# FADEX Generated files
+examples/
+results/
+*.json
+
+# Docker
+docker-compose.override.yml

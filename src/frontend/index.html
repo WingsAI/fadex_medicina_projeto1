@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FADEX - Análise de Qualidade de Imagens Médicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9ff;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f2ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8ebff;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .exam-type {
+            margin: 20px 0;
+        }
+
+        .exam-type label {
+            margin-right: 20px;
+            font-size: 1.1em;
+        }
+
+        .exam-type select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 2px solid #667eea;
+            font-size: 1em;
+        }
+
+        .preview-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .results {
+            display: none;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            margin: 30px auto;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .score-excellent { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .score-good { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .score-fair { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .score-poor { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); }
+
+        .dimensions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .dimension {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .dimension-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+        }
+
+        .dimension-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .dimension-score {
+            text-align: right;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .recommendations {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .recommendations h3 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+
+        .recommendations ul {
+            list-style-position: inside;
+        }
+
+        .recommendations li {
+            margin: 8px 0;
+            color: #856404;
+        }
+
+        .metadata {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #66bb6a;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .badge-excellent { background: #38ef7d; color: white; }
+        .badge-good { background: #4facfe; color: white; }
+        .badge-fair { background: #fee140; color: #333; }
+        .badge-poor { background: #ff6b6b; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 FADEX</h1>
+            <p>Sistema Nacional de Qualidade de Imagens Médicas</p>
+        </div>
+
+        <div class="card">
+            <h2>📤 Upload de Imagem</h2>
+
+            <div class="exam-type">
+                <label for="examType">Tipo de Exame:</label>
+                <select id="examType">
+                    <option value="fundoscopy">Fundoscopia</option>
+                    <option value="oct">OCT</option>
+                    <option value="angiography">Angiografia</option>
+                </select>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <p>Clique ou arraste uma imagem aqui</p>
+                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                    Formatos suportados: PNG, JPG, JPEG
+                </p>
+            </div>
+
+            <input type="file" id="fileInput" accept="image/*">
+
+            <div class="preview-container" id="previewContainer">
+                <img id="previewImage" class="preview-image">
+                <div style="text-align: center;">
+                    <button class="btn" id="analyzeBtn">🔬 Analisar Qualidade</button>
+                    <button class="btn" id="clearBtn">🗑️ Limpar</button>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analisando imagem, aguarde...</p>
+            </div>
+
+            <div class="status" id="status"></div>
+        </div>
+
+        <div class="card results" id="results">
+            <h2>📊 Resultados da Análise</h2>
+
+            <div class="score-circle" id="scoreCircle">
+                <span id="scoreValue">--</span>
+            </div>
+
+            <div style="text-align: center;">
+                <div>
+                    <strong>ML Readiness:</strong>
+                    <span class="badge" id="mlReadiness">--</span>
+                </div>
+                <div>
+                    <strong>Adequação Clínica:</strong>
+                    <span class="badge" id="clinicalAdequacy">--</span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <strong>Confiança:</strong>
+                    <span id="confidence" style="font-size: 1.2em; color: #667eea;">--</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">Dimensões de Qualidade</h3>
+            <div class="dimensions" id="dimensions"></div>
+
+            <div class="recommendations" id="recommendationsContainer" style="display: none;">
+                <h3>💡 Recomendações</h3>
+                <ul id="recommendations"></ul>
+            </div>
+
+            <div class="metadata" id="metadata"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let selectedFile = null;
+
+        // Elementos
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const loading = document.getElementById('loading');
+        const status = document.getElementById('status');
+        const results = document.getElementById('results');
+        const examType = document.getElementById('examType');
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // File selection
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // Analyze button
+        analyzeBtn.addEventListener('click', analyzeImage);
+
+        // Clear button
+        clearBtn.addEventListener('click', clearAll);
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showStatus('Selecione um arquivo de imagem válido', 'error');
+                return;
+            }
+
+            selectedFile = file;
+
+            // Preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+                results.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+
+            showStatus('Imagem carregada com sucesso! Clique em "Analisar" para continuar.', 'success');
+        }
+
+        async function analyzeImage() {
+            if (!selectedFile) {
+                showStatus('Selecione uma imagem primeiro', 'error');
+                return;
+            }
+
+            // Show loading
+            loading.style.display = 'block';
+            analyzeBtn.disabled = true;
+            results.style.display = 'none';
+            status.style.display = 'none';
+
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            formData.append('exam_type', examType.value);
+
+            try {
+                const response = await fetch(`${API_URL}/api/v1/analyze`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data.result);
+                } else {
+                    showStatus('Erro ao analisar imagem', 'error');
+                }
+
+            } catch (error) {
+                showStatus(`Erro: ${error.message}. Certifique-se de que a API está rodando.`, 'error');
+            } finally {
+                loading.style.display = 'none';
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        function displayResults(result) {
+            // Score circle
+            const score = result.global_score;
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreValue = document.getElementById('scoreValue');
+
+            scoreValue.textContent = score.toFixed(0);
+
+            // Color based on score
+            scoreCircle.className = 'score-circle';
+            if (score >= 85) scoreCircle.classList.add('score-excellent');
+            else if (score >= 70) scoreCircle.classList.add('score-good');
+            else if (score >= 50) scoreCircle.classList.add('score-fair');
+            else scoreCircle.classList.add('score-poor');
+
+            // ML Readiness
+            const mlReadiness = document.getElementById('mlReadiness');
+            mlReadiness.textContent = result.ml_readiness.toUpperCase();
+            mlReadiness.className = `badge badge-${result.ml_readiness}`;
+
+            // Clinical Adequacy
+            const clinicalAdequacy = document.getElementById('clinicalAdequacy');
+            clinicalAdequacy.textContent = result.clinical_adequacy.toUpperCase();
+            clinicalAdequacy.className = `badge badge-${getAdequacyClass(result.clinical_adequacy)}`;
+
+            // Confidence
+            document.getElementById('confidence').textContent = `${result.confidence.toFixed(1)}%`;
+
+            // Dimensions
+            const dimensionsContainer = document.getElementById('dimensions');
+            dimensionsContainer.innerHTML = '';
+
+            for (const [dim, score] of Object.entries(result.dimension_scores)) {
+                const dimDiv = document.createElement('div');
+                dimDiv.className = 'dimension';
+                dimDiv.innerHTML = `
+                    <div class="dimension-name">${formatDimensionName(dim)}</div>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: ${score}%"></div>
+                    </div>
+                    <div class="dimension-score">${score.toFixed(1)}/100</div>
+                `;
+                dimensionsContainer.appendChild(dimDiv);
+            }
+
+            // Recommendations
+            if (result.recommendations && result.recommendations.length > 0) {
+                const recommendationsContainer = document.getElementById('recommendationsContainer');
+                const recommendationsList = document.getElementById('recommendations');
+                recommendationsList.innerHTML = '';
+
+                result.recommendations.forEach(rec => {
+                    const li = document.createElement('li');
+                    li.textContent = rec;
+                    recommendationsList.appendChild(li);
+                });
+
+                recommendationsContainer.style.display = 'block';
+            }
+
+            // Metadata
+            const metadataDiv = document.getElementById('metadata');
+            metadataDiv.innerHTML = `
+                <strong>Informações da Análise:</strong><br>
+                Arquivo: ${result.metadata.filename}<br>
+                Tipo de Exame: ${result.metadata.exam_type}<br>
+                Dimensões: ${result.metadata.shape[1]}x${result.metadata.shape[0]}px<br>
+                Data: ${new Date(result.metadata.analysis_timestamp).toLocaleString('pt-BR')}
+            `;
+
+            // Show results
+            results.style.display = 'block';
+            showStatus('Análise concluída com sucesso!', 'success');
+        }
+
+        function getAdequacyClass(adequacy) {
+            if (adequacy === 'diagnostic') return 'excellent';
+            if (adequacy === 'screening') return 'good';
+            return 'poor';
+        }
+
+        function formatDimensionName(name) {
+            const names = {
+                'sharpness': 'Nitidez',
+                'exposure': 'Exposição',
+                'contrast': 'Contraste',
+                'noise_level': 'Nível de Ruído',
+                'artifacts': 'Artefatos',
+                'clinical_adequacy': 'Adequação Clínica'
+            };
+            return names[name] || name;
+        }
+
+        function clearAll() {
+            selectedFile = null;
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            results.style.display = 'none';
+            status.style.display = 'none';
+        }
+
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
