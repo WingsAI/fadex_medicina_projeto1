@@ -190,6 +190,9 @@ class FadexQualityAnalyzer:
         Combina múltiplas métricas para avaliação robusta
         PROPRIEDADE INTELECTUAL
         """
+        # Garante tipo correto para OpenCV
+        image = image.astype(np.float64)
+
         # 1. Variance of Laplacian (método clássico)
         laplacian_var = cv2.Laplacian(image, cv2.CV_64F).var()
         
@@ -236,6 +239,9 @@ class FadexQualityAnalyzer:
         Específica para imagens oftalmológicas
         ALGORITMO PROPRIETÁRIO
         """
+        # Garante tipo correto
+        image = image.astype(np.float64)
+
         # 1. Análise de histograma
         hist, bins = np.histogram(image.flatten(), bins=256, range=(0, 1))
         hist_normalized = hist / hist.sum()
@@ -278,14 +284,17 @@ class FadexQualityAnalyzer:
         Análise proprietária de contraste FADEX
         Otimizada para estruturas oftalmológicas
         """
+        # Garante tipo correto
+        image = image.astype(np.float64)
+
         # 1. RMS Contrast (método clássico)
         rms_contrast = np.sqrt(np.mean((image - np.mean(image))**2))
         
         # 2. Michelson Contrast para regiões de interesse
         # Identifica regiões com estruturas oftalmológicas
         structure_enhanced = filters.unsharp_mask(image, radius=2, amount=1)
-        local_maxima = feature.peak_local_maxima(structure_enhanced, min_distance=20)
-        local_minima = feature.peak_local_maxima(-structure_enhanced, min_distance=20)
+        local_maxima = feature.peak_local_max(structure_enhanced, min_distance=20)
+        local_minima = feature.peak_local_max(-structure_enhanced, min_distance=20)
         
         if len(local_maxima[0]) > 0 and len(local_minima[0]) > 0:
             max_vals = structure_enhanced[local_maxima]
@@ -337,6 +346,9 @@ class FadexQualityAnalyzer:
         Análise proprietária de ruído FADEX
         Detecta múltiplos tipos de ruído em imagens médicas
         """
+        # Garante tipo correto
+        image = image.astype(np.float64)
+
         # 1. Noise estimation via wavelet decomposition
         from scipy import ndimage
         
@@ -391,6 +403,9 @@ class FadexQualityAnalyzer:
         Detecção proprietária de artifacts FADEX
         Específica para artifacts comuns em oftalmologia
         """
+        # Garante tipo correto
+        image = image.astype(np.float64)
+
         artifact_score = 100.0  # Começa com score perfeito
         
         # 1. Motion blur detection
@@ -635,7 +650,7 @@ class FadexQualityAnalyzer:
         dimension_consistency = 1 - (np.std(scores_list) / 100)
         
         # 2. Qualidade da imagem para análise
-        image_quality_factor = min(np.mean(dimension_scores.values()) / 100, 1.0)
+        image_quality_factor = min(np.mean(list(dimension_scores.values())) / 100, 1.0)
         
         # 3. Resolução adequacy
         h, w = image.shape
