@@ -460,8 +460,6 @@
                     } catch (e) {}
                     throw new Error(errorDetail);
                 }
-                    throw new Error(`Erro na API: ${response.status}`);
-                }
 
                 const data = await response.json();
 

@@ -171,17 +171,20 @@ class FadexQualityAnalyzer:
         """Preprocessamento padronizado da imagem"""
         if isinstance(image, torch.Tensor):
             image = image.detach().cpu().numpy()
-        
+
         # Normalização para 0-1
         if image.max() > 1.0:
             image = image.astype(np.float32) / 255.0
-        
+        else:
+            # Garantir float32 para compatibilidade com OpenCV
+            image = image.astype(np.float32)
+
         # Conversão para grayscale se necessário para análises específicas
         if len(image.shape) == 3 and image.shape[-1] == 3:
             gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         else:
             gray_image = image
-        
+
         return gray_image
     
     def _analyze_sharpness(self, image: np.ndarray) -> float:
