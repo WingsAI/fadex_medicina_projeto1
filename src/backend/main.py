@@ -294,6 +294,52 @@ async def api_info():
     }
 
 
+@app.get("/api/v1/debug")
+async def debug_test():
+    """
+    Endpoint de debug - testa o algoritmo sem upload
+    Útil para verificar se o problema é no upload ou no algoritmo
+    """
+    try:
+        logger.info("🔍 Executando teste de debug...")
+
+        # Cria imagem sintética pequena
+        test_image = np.random.rand(128, 128, 3)
+
+        logger.info("📊 Testando algoritmo FADEX...")
+        score = analyze_image_quality(test_image, exam_type='fundoscopy')
+
+        logger.info(f"✅ Debug OK! Score: {score.global_score:.1f}")
+
+        return {
+            "success": True,
+            "message": "Algoritmo funcionando corretamente",
+            "test_result": {
+                "global_score": round(score.global_score, 2),
+                "ml_readiness": score.ml_readiness,
+                "confidence": round(score.confidence, 2)
+            },
+            "system_info": {
+                "numpy_version": np.__version__,
+                "opencv_available": True,
+                "fadex_core_loaded": True
+            }
+        }
+    except Exception as e:
+        error_info = {
+            "error": str(e),
+            "type": type(e).__name__,
+            "traceback": traceback.format_exc()
+        }
+        logger.error(f"❌ Debug falhou: {error_info}")
+
+        return {
+            "success": False,
+            "message": "Erro no algoritmo",
+            "error": error_info
+        }
+
+
 if __name__ == "__main__":
     print("="*60)
     print("🏥 FADEX API - Sistema de Análise de Qualidade")
