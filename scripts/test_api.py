@@ -219,10 +219,10 @@ def main():
                 tests_passed += 1
         else:
             print("\n⚠️  Imagens de exemplo não encontradas")
-            print("   Execute: python create_test_images.py")
+            print("   Execute: python scripts/create_test_images.py")
     else:
         print("\n⚠️  Diretório examples/ não encontrado")
-        print("   Execute: python create_test_images.py")
+        print("   Execute: python scripts/create_test_images.py")
 
     # Resumo
     print("\n" + "="*60)

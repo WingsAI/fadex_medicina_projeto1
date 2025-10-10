@@ -13,8 +13,8 @@ import cv2
 from datetime import datetime
 from typing import Optional
 
-# Adiciona src ao path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+# Adiciona src ao path (subindo um nível de scripts/ para raiz, depois entrando em src/)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from ml.scoring.fadex_core import analyze_image_quality, FadexScore
 
@@ -226,11 +226,11 @@ def main():
     # Verifica argumentos
     if len(sys.argv) < 2:
         print("\n📝 Uso:")
-        print("  python test_fadex.py <imagem>              # Analisa uma imagem")
-        print("  python test_fadex.py <diretório> --batch   # Analisa múltiplas imagens")
+        print("  python scripts/test_fadex.py <imagem>              # Analisa uma imagem")
+        print("  python scripts/test_fadex.py <diretório> --batch   # Analisa múltiplas imagens")
         print("\nExemplos:")
-        print("  python test_fadex.py examples/fundus_01.png")
-        print("  python test_fadex.py examples/ --batch")
+        print("  python scripts/test_fadex.py examples/fundus_01.png")
+        print("  python scripts/test_fadex.py examples/ --batch")
 
         # Se não há argumentos, tenta usar imagens de exemplo
         examples_dir = Path("examples")
@@ -239,7 +239,7 @@ def main():
             tester.analyze_batch("examples", pattern="*.png")
         else:
             print(f"\n⚠️  Diretório examples/ não encontrado. Crie imagens de teste primeiro.")
-            print(f"    Execute: python create_test_images.py")
+            print(f"    Execute: python scripts/create_test_images.py")
 
         return
 

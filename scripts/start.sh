@@ -48,13 +48,13 @@ case $option in
         # Gera imagens se não existirem
         if [ ! -d "examples" ]; then
             echo "Gerando imagens de teste..."
-            python create_test_images.py
+            python scripts/create_test_images.py
         fi
 
         # Execute análise
         echo ""
         echo "Executando análise em batch..."
-        python test_fadex.py examples/ --batch
+        python scripts/test_fadex.py examples/ --batch
 
         echo ""
         echo "✅ Análise concluída!"
@@ -83,7 +83,7 @@ case $option in
         # Gera imagens se não existirem
         if [ ! -d "examples" ]; then
             echo "Gerando imagens de teste..."
-            python create_test_images.py
+            python scripts/create_test_images.py
         fi
 
         echo ""

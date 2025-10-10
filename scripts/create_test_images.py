@@ -183,7 +183,7 @@ class TestImageGenerator:
             print(f"    ✓ Salvo em: {output_path}")
 
         print(f"\n✅ {len(test_images)} imagens criadas em {self.output_dir}/")
-        print(f"\n💡 Execute agora: python test_fadex.py examples/ --batch")
+        print(f"\n💡 Execute agora: python scripts/test_fadex.py examples/ --batch")
 
     def create_artifact_examples(self):
         """Cria imagens com artifacts específicos para teste"""
@@ -253,7 +253,7 @@ def main():
     print("✅ Imagens de teste criadas com sucesso!")
     print("="*60)
     print("\n📝 Próximos passos:")
-    print("  1. python test_fadex.py examples/ --batch")
+    print("  1. python scripts/test_fadex.py examples/ --batch")
     print("  2. Verifique os resultados em results/")
     print("  3. Ajuste os parâmetros conforme necessário")
 

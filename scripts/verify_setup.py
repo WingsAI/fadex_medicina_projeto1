@@ -153,7 +153,7 @@ class SetupVerifier:
 
         # Suggestions
         if not has_examples:
-            print("💡 Execute: python create_test_images.py")
+            print("💡 Execute: python scripts/create_test_images.py")
         if not has_results:
             print("💡 Diretório results/ será criado automaticamente na primeira execução")
         print()
@@ -175,8 +175,8 @@ class SetupVerifier:
             print("🎉 SETUP COMPLETO! Sistema pronto para uso.")
             print()
             print("Próximos passos:")
-            print("  1. python create_test_images.py  # Gera imagens de teste")
-            print("  2. python test_fadex.py examples/ --batch  # Testa algoritmo")
+            print("  1. python scripts/create_test_images.py  # Gera imagens de teste")
+            print("  2. python scripts/test_fadex.py examples/ --batch  # Testa algoritmo")
             print("  3. python src/backend/main.py  # Inicia API")
             print("  4. Abra src/frontend/index.html no navegador")
             return True
