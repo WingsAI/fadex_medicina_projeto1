@@ -298,10 +298,13 @@ class FadexQualityAnalyzer:
         structure_enhanced = filters.unsharp_mask(image, radius=2, amount=1)
         local_maxima = feature.peak_local_max(structure_enhanced, min_distance=20)
         local_minima = feature.peak_local_max(-structure_enhanced, min_distance=20)
-        
-        if len(local_maxima[0]) > 0 and len(local_minima[0]) > 0:
-            max_vals = structure_enhanced[local_maxima]
-            min_vals = structure_enhanced[local_minima]
+
+        if len(local_maxima) > 0 and len(local_minima) > 0:
+            # Converter coordenadas para tupla de índices
+            max_coords = tuple(local_maxima.T)
+            min_coords = tuple(local_minima.T)
+            max_vals = structure_enhanced[max_coords]
+            min_vals = structure_enhanced[min_coords]
             michelson_contrast = (np.mean(max_vals) - np.mean(min_vals)) / (np.mean(max_vals) + np.mean(min_vals) + 1e-8)
         else:
             michelson_contrast = 0
