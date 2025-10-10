@@ -13,11 +13,27 @@ import cv2
 from datetime import datetime
 import sys
 import os
+import traceback
+import logging
 
-# Adiciona src ao path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# Configuração de logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-from ml.scoring.fadex_core import analyze_image_quality
+# Adiciona src ao path - corrigido para funcionar de qualquer lugar
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.dirname(current_dir)  # Sobe de backend/ para src/
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
+    logger.info(f"Adicionado ao path: {src_dir}")
+
+try:
+    from ml.scoring.fadex_core import analyze_image_quality
+    logger.info("✅ Módulo fadex_core importado com sucesso")
+except Exception as e:
+    logger.error(f"❌ Erro ao importar fadex_core: {e}")
+    logger.error(f"   sys.path: {sys.path}")
+    raise
 
 # Inicializa FastAPI
 app = FastAPI(
@@ -85,6 +101,8 @@ async def analyze_image(
     """
 
     try:
+        logger.info(f"📥 Recebido arquivo: {file.filename}, tipo: {file.content_type}")
+
         # Valida tipo de arquivo
         if not file.content_type.startswith('image/'):
             raise HTTPException(
@@ -93,7 +111,10 @@ async def analyze_image(
             )
 
         # Lê arquivo
+        logger.info("📖 Lendo arquivo...")
         contents = await file.read()
+        logger.info(f"✓ Arquivo lido: {len(contents)} bytes")
+
         nparr = np.frombuffer(contents, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
@@ -102,6 +123,8 @@ async def analyze_image(
                 status_code=400,
                 detail="Não foi possível decodificar a imagem. Verifique o formato."
             )
+
+        logger.info(f"✓ Imagem decodificada: {image.shape}")
 
         # Converte BGR para RGB
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -121,7 +144,9 @@ async def analyze_image(
             metadata["exam_date"] = exam_date
 
         # Executa análise FADEX
+        logger.info("🔬 Iniciando análise FADEX...")
         score = analyze_image_quality(image, exam_type=exam_type, metadata=metadata)
+        logger.info(f"✅ Análise concluída! Score: {score.global_score:.1f}/100")
 
         # Retorna resultado
         return {
@@ -142,9 +167,17 @@ async def analyze_image(
     except HTTPException:
         raise
     except Exception as e:
+        # Captura erro completo para debugging
+        error_detail = {
+            "error": str(e),
+            "type": type(e).__name__,
+            "traceback": traceback.format_exc()
+        }
+        logger.error(f"❌ Erro ao processar imagem: {error_detail}")
+
         raise HTTPException(
             status_code=500,
-            detail=f"Erro ao processar imagem: {str(e)}"
+            detail=f"Erro ao processar imagem: {str(e)}. Tipo: {type(e).__name__}"
         )
 
 
