@@ -1,6 +1,10 @@
 # SNPQIM Backend - Dependências Essenciais
 # Para rodar APENAS o backend API + análise de imagens
 
+# Deep Learning (necessário para fadex_core.py)
+torch>=2.0.0
+torchvision>=0.15.0
+
 # Core para análise de imagens
 numpy>=1.24.0,<2.0.0
 opencv-python>=4.8.0
