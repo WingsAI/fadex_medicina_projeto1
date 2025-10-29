@@ -1,7 +1,7 @@
 # SNPQIM Backend - Dependências Essenciais
 # Para rodar APENAS o backend API + análise de imagens
 
-# Deep Learning (necessário para fadex_core.py)
+# Deep Learning (necessário para wingsai_core.py)
 torch>=2.0.0
 torchvision>=0.15.0
 

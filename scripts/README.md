@@ -1,6 +1,6 @@
-# 🔧 FADEX Scripts
+# 🔧 WingsAI Scripts
 
-Scripts utilitários para testar e executar o sistema FADEX.
+Scripts utilitários para testar e executar o sistema WingsAI.
 
 ---
 
@@ -20,18 +20,18 @@ python scripts/create_test_images.py
 
 ---
 
-### 2. `test_fadex.py`
+### 2. `test_wingsai.py`
 Testa o algoritmo de scoring sem necessidade de infraestrutura.
 
 ```bash
 # Analisa uma única imagem
-python scripts/test_fadex.py examples/fundus_high_quality.png
+python scripts/test_wingsai.py examples/fundus_high_quality.png
 
 # Analisa múltiplas imagens (batch)
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 
 # Especifica tipo de exame
-python scripts/test_fadex.py examples/oct_high_quality.png --exam=oct
+python scripts/test_wingsai.py examples/oct_high_quality.png --exam=oct
 ```
 
 **Output:**
@@ -101,7 +101,7 @@ python scripts/verify_setup.py
 python scripts/create_test_images.py
 
 # 3. Teste o algoritmo
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 
 # 4. Veja os resultados
 ls results/
@@ -112,7 +112,7 @@ cat results/batch_summary_*.json
 
 ```bash
 # Análise rápida de uma imagem
-python scripts/test_fadex.py path/to/image.png
+python scripts/test_wingsai.py path/to/image.png
 
 # Iniciar sistema completo
 ./scripts/start.sh  # Escolha opção 2
@@ -140,7 +140,7 @@ python scripts/test_fadex.py path/to/image.png
 
 ---
 
-### test_fadex.py
+### test_wingsai.py
 
 **Features:**
 - Suporta PNG, JPG, JPEG
@@ -205,11 +205,11 @@ Todos os scripts devem ser executados **da raiz do projeto**, não de dentro da 
 ```bash
 # ✅ Correto
 cd fadex_medicina_projeto1
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 
 # ❌ Errado
 cd fadex_medicina_projeto1/scripts
-python test_fadex.py examples/ --batch  # Vai falhar!
+python test_wingsai.py examples/ --batch  # Vai falhar!
 ```
 
 ### Imports
@@ -231,7 +231,7 @@ Você está executando de dentro de `scripts/`. Execute da raiz:
 
 ```bash
 cd ..  # Volta para raiz
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 ```
 
 ### "No images found"

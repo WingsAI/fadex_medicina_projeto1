@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# FADEX - Script de Correção Rápida do NumPy
+# WingsAI - Script de Correção Rápida do NumPy
 # Resolve incompatibilidade NumPy 2.x com PyTorch/OpenCV
 
 echo "======================================"
-echo "🔧 FADEX - Correção NumPy"
+echo "🔧 WingsAI - Correção NumPy"
 echo "======================================"
 echo ""
 
@@ -88,8 +88,8 @@ if [ $RESULT -eq 0 ]; then
     echo "======================================"
     echo ""
     echo "Próximos passos:"
-    echo "  1. python3 scripts/test_fadex.py examples/fundus_high_quality.png"
-    echo "  2. python3 scripts/test_fadex.py examples/ --batch"
+    echo "  1. python3 scripts/test_wingsai.py examples/fundus_high_quality.png"
+    echo "  2. python3 scripts/test_wingsai.py examples/ --batch"
     echo ""
 else
     echo ""

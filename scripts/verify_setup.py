@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FADEX - Script de Verificação de Setup
+WingsAI - Script de Verificação de Setup
 Verifica se todos os componentes estão prontos para uso
 """
 
@@ -11,7 +11,7 @@ import importlib.util
 
 
 class SetupVerifier:
-    """Verifica setup do FADEX"""
+    """Verifica setup do WingsAI"""
 
     def __init__(self):
         self.checks_passed = 0
@@ -82,7 +82,7 @@ class SetupVerifier:
         """Executa todas as verificações"""
 
         print("="*60)
-        print("🔍 FADEX - Verificação de Setup")
+        print("🔍 WingsAI - Verificação de Setup")
         print("="*60)
         print()
 
@@ -93,8 +93,8 @@ class SetupVerifier:
 
         # 2. Core files
         print("📁 Verificando Arquivos Core...")
-        self.verify_file_exists("src/ml/scoring/fadex_core.py", "Algoritmo FADEX")
-        self.verify_file_exists("test_fadex.py", "Script de teste")
+        self.verify_file_exists("src/ml/scoring/wingsai_core.py", "Algoritmo WingsAI")
+        self.verify_file_exists("test_wingsai.py", "Script de teste")
         self.verify_file_exists("create_test_images.py", "Gerador de imagens")
         self.verify_file_exists("requirements.txt", "Requirements completo")
         self.verify_file_exists("requirements-minimal.txt", "Requirements mínimo")
@@ -127,7 +127,7 @@ class SetupVerifier:
 
         # 7. Tests
         print("🧪 Verificando Testes...")
-        self.verify_file_exists("tests/test_fadex_core.py", "Testes unitários")
+        self.verify_file_exists("tests/test_wingsai_core.py", "Testes unitários")
         print()
 
         # 8. Dependencies - Core (required)
@@ -176,7 +176,7 @@ class SetupVerifier:
             print()
             print("Próximos passos:")
             print("  1. python scripts/create_test_images.py  # Gera imagens de teste")
-            print("  2. python scripts/test_fadex.py examples/ --batch  # Testa algoritmo")
+            print("  2. python scripts/test_wingsai.py examples/ --batch  # Testa algoritmo")
             print("  3. python src/backend/main.py  # Inicia API")
             print("  4. Abra src/frontend/index.html no navegador")
             return True

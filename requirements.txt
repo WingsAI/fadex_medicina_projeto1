@@ -1,4 +1,4 @@
-# FADEX - Dependências do Projeto
+# WingsAI - Dependências Completas do Projeto
 # Python >= 3.9
 
 # Core ML & Deep Learning
