@@ -1,0 +1,155 @@
+{
+  "header": {
+    "dashboard": "Dashboard",
+    "api": "API",
+    "swagger": "Swagger",
+    "profile": {
+      "name": "Beatrice Howard",
+      "department": "Oncologia"
+    }
+  },
+  "sidebar": {
+    "title": "WingsAI",
+    "subtitle": "Plataforma Médica SNPQIM",
+    "menu": {
+      "analytics": "Analytics",
+      "patients": "Pacientes",
+      "reports": "Relatórios",
+      "settings": "Configurações"
+    },
+    "connectedProfiles": "Perfis Conectados",
+    "aiAnalytics": {
+      "title": "Analytics com IA",
+      "description": "Análise de dados avançada com machine learning",
+      "button": "Explorar"
+    }
+  },
+  "dashboard": {
+    "qualityScore": {
+      "title": "Score de Qualidade",
+      "latestAnalysis": "Última análise",
+      "noAnalysis": "Nenhuma análise ainda",
+      "confidence": "conf"
+    },
+    "mlReadiness": {
+      "title": "Prontidão ML",
+      "waiting": "Aguardando upload"
+    },
+    "qualityMetrics": {
+      "title": "Métricas de Qualidade",
+      "imageQuality": "Score de Qualidade da Imagem",
+      "adequacy": "Taxa de Adequação",
+      "efficiency": "Eficiência de Processamento"
+    },
+    "recentActivity": {
+      "title": "Atividade Recente",
+      "newAnalysis": "Nova análise concluída",
+      "patientId": "ID do Paciente",
+      "reportGenerated": "Relatório gerado",
+      "monthlyAssessment": "Avaliação mensal de qualidade pronta",
+      "teamUpdate": "Atualização da equipe",
+      "newMembers": "novos membros entraram no seu workspace",
+      "ago": "atrás"
+    }
+  },
+  "research": {
+    "title": "Pesquisas",
+    "week": "Semana",
+    "today": "Hoje",
+    "items": {
+      "calculating": "Calculando o risco de doenças",
+      "diagnosis": "Diagnóstico de doenças genéticas",
+      "patterns": "Padrões de hereditariedade"
+    },
+    "viewAll": "Ver todas as pesquisas"
+  },
+  "imageUpload": {
+    "title": "Análise de Qualidade de Imagem",
+    "dragDrop": "Arraste e solte uma imagem médica aqui",
+    "or": "ou",
+    "selectFile": "Selecionar Arquivo",
+    "supportedFormats": "JPEG, PNG, DICOM",
+    "maxSize": "Tamanho máximo: 10MB",
+    "analyzing": "Analisando imagem...",
+    "error": "Erro ao analisar imagem",
+    "results": {
+      "title": "Resultados da Análise",
+      "globalScore": "Score Global",
+      "confidence": "Confiança",
+      "mlReadiness": "Prontidão ML",
+      "clinicalAdequacy": "Adequação Clínica",
+      "recommendations": "Recomendações"
+    }
+  },
+  "api": {
+    "title": "API WingsAI - Processamento em Lote",
+    "subtitle": "Use nossa API REST para processar múltiplas imagens médicas e obter análises de qualidade em lote.",
+    "quickStart": {
+      "title": "Início Rápido",
+      "baseEndpoint": "Endpoint Base:",
+      "checkStatus": "Verificar Status da API:"
+    },
+    "singleImage": {
+      "title": "Análise de Imagem Única",
+      "endpoint": "Endpoint:",
+      "exampleCurl": "Exemplo com cURL:",
+      "examplePython": "Exemplo com Python:"
+    },
+    "batch": {
+      "title": "Processamento em Lote",
+      "tip": "Dica:",
+      "tipText": "Para processar múltiplas imagens, execute requisições em paralelo usando threading ou async/await.",
+      "examplePython": "Exemplo Python com Threading:"
+    },
+    "response": {
+      "title": "Formato de Resposta"
+    },
+    "bestPractices": {
+      "title": "Boas Práticas",
+      "concurrency": {
+        "title": "Limite de Concorrência",
+        "description": "Use no máximo 5-10 threads simultâneas para não sobrecarregar o servidor."
+      },
+      "errorHandling": {
+        "title": "Tratamento de Erros",
+        "description": "Sempre implemente try/except para capturar erros de rede ou processamento."
+      },
+      "formats": {
+        "title": "Formatos Suportados",
+        "description": "JPEG, PNG, DICOM (.dcm) - até 10MB por imagem."
+      }
+    },
+    "limitations": {
+      "title": "Limitações",
+      "maxSize": "Tamanho máximo: 10MB por imagem",
+      "rateLimit": "Rate limiting: Recomendado não exceder 100 requisições por minuto",
+      "timeout": "Timeout: Cada requisição tem timeout de 30 segundos"
+    }
+  },
+  "swagger": {
+    "title": "Documentação Interativa da API",
+    "subtitle": "Explore e teste todos os endpoints da API WingsAI usando a interface Swagger UI.",
+    "openInNewTab": "Abrir Swagger em Nova Aba",
+    "interactive": "Interface Interativa",
+    "mainEndpoints": {
+      "title": "Endpoints Principais"
+    },
+    "resources": {
+      "title": "Recursos",
+      "swaggerUI": "Swagger UI (Interativo)",
+      "redoc": "ReDoc (Documentação)",
+      "openapi": "OpenAPI Schema (JSON)"
+    },
+    "howToUse": {
+      "title": "Como Usar",
+      "step1": "Clique em qualquer endpoint para expandir seus detalhes",
+      "step2": "Clique no botão \"Try it out\" para habilitar o modo de teste",
+      "step3": "Preencha os parâmetros necessários (como upload de arquivo)",
+      "step4": "Clique em \"Execute\" para fazer a requisição",
+      "step5": "Veja a resposta completa, incluindo código de status, corpo e headers"
+    }
+  },
+  "footer": {
+    "text": "Plataforma Médica SNPQIM - Sistema Nacional de Qualidade de Imagens Médicas"
+  }
+}

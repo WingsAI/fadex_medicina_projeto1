@@ -1,0 +1,155 @@
+{
+  "header": {
+    "dashboard": "Dashboard",
+    "api": "API",
+    "swagger": "Swagger",
+    "profile": {
+      "name": "Beatrice Howard",
+      "department": "Oncology"
+    }
+  },
+  "sidebar": {
+    "title": "WingsAI",
+    "subtitle": "SNPQIM Medical Platform",
+    "menu": {
+      "analytics": "Analytics",
+      "patients": "Patients",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "connectedProfiles": "Connected Profiles",
+    "aiAnalytics": {
+      "title": "AI-Powered Analytics",
+      "description": "Advanced data analysis with machine learning",
+      "button": "Explore"
+    }
+  },
+  "dashboard": {
+    "qualityScore": {
+      "title": "Quality Score",
+      "latestAnalysis": "Latest analysis",
+      "noAnalysis": "No analysis yet",
+      "confidence": "conf"
+    },
+    "mlReadiness": {
+      "title": "ML Readiness",
+      "waiting": "Waiting for upload"
+    },
+    "qualityMetrics": {
+      "title": "Quality Metrics",
+      "imageQuality": "Image Quality Score",
+      "adequacy": "Adequacy Rate",
+      "efficiency": "Processing Efficiency"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "newAnalysis": "New analysis completed",
+      "patientId": "Patient ID",
+      "reportGenerated": "Report generated",
+      "monthlyAssessment": "Monthly quality assessment ready",
+      "teamUpdate": "Team update",
+      "newMembers": "new members joined your workspace",
+      "ago": "ago"
+    }
+  },
+  "research": {
+    "title": "Researches",
+    "week": "Week",
+    "today": "Today",
+    "items": {
+      "calculating": "Calculating the risk of diseases",
+      "diagnosis": "Diagnosis of genetic diseases",
+      "patterns": "Patterns in heredity"
+    },
+    "viewAll": "View all researches"
+  },
+  "imageUpload": {
+    "title": "Image Quality Analysis",
+    "dragDrop": "Drag and drop a medical image here",
+    "or": "or",
+    "selectFile": "Select File",
+    "supportedFormats": "JPEG, PNG, DICOM",
+    "maxSize": "Max size: 10MB",
+    "analyzing": "Analyzing image...",
+    "error": "Error analyzing image",
+    "results": {
+      "title": "Analysis Results",
+      "globalScore": "Global Score",
+      "confidence": "Confidence",
+      "mlReadiness": "ML Readiness",
+      "clinicalAdequacy": "Clinical Adequacy",
+      "recommendations": "Recommendations"
+    }
+  },
+  "api": {
+    "title": "WingsAI API - Batch Processing",
+    "subtitle": "Use our REST API to process multiple medical images and obtain quality analyses in batch.",
+    "quickStart": {
+      "title": "Quick Start",
+      "baseEndpoint": "Base Endpoint:",
+      "checkStatus": "Check API Status:"
+    },
+    "singleImage": {
+      "title": "Single Image Analysis",
+      "endpoint": "Endpoint:",
+      "exampleCurl": "Example with cURL:",
+      "examplePython": "Example with Python:"
+    },
+    "batch": {
+      "title": "Batch Processing",
+      "tip": "Tip:",
+      "tipText": "To process multiple images, execute parallel requests using threading or async/await.",
+      "examplePython": "Python Example with Threading:"
+    },
+    "response": {
+      "title": "Response Format"
+    },
+    "bestPractices": {
+      "title": "Best Practices",
+      "concurrency": {
+        "title": "Concurrency Limit",
+        "description": "Use at most 5-10 simultaneous threads to avoid overloading the server."
+      },
+      "errorHandling": {
+        "title": "Error Handling",
+        "description": "Always implement try/except to catch network or processing errors."
+      },
+      "formats": {
+        "title": "Supported Formats",
+        "description": "JPEG, PNG, DICOM (.dcm) - up to 10MB per image."
+      }
+    },
+    "limitations": {
+      "title": "Limitations",
+      "maxSize": "Maximum size: 10MB per image",
+      "rateLimit": "Rate limiting: Recommended not to exceed 100 requests per minute",
+      "timeout": "Timeout: Each request has a 30-second timeout"
+    }
+  },
+  "swagger": {
+    "title": "Interactive API Documentation",
+    "subtitle": "Explore and test all WingsAI API endpoints using the Swagger UI interface.",
+    "openInNewTab": "Open Swagger in New Tab",
+    "interactive": "Interactive Interface",
+    "mainEndpoints": {
+      "title": "Main Endpoints"
+    },
+    "resources": {
+      "title": "Resources",
+      "swaggerUI": "Swagger UI (Interactive)",
+      "redoc": "ReDoc (Documentation)",
+      "openapi": "OpenAPI Schema (JSON)"
+    },
+    "howToUse": {
+      "title": "How to Use",
+      "step1": "Click on any endpoint to expand its details",
+      "step2": "Click the \"Try it out\" button to enable test mode",
+      "step3": "Fill in the required parameters (such as file upload)",
+      "step4": "Click \"Execute\" to make the request",
+      "step5": "See the full response, including status code, body, and headers"
+    }
+  },
+  "footer": {
+    "text": "SNPQIM Medical Platform - National System for Medical Image Quality Standardization"
+  }
+}
