@@ -1,15 +1,23 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '@/components/Sidebar'
 import Header from '@/components/Header'
 import DNAVisualization from '@/components/DNAVisualization'
 import StatsCard from '@/components/StatsCard'
 import HeartRateCard from '@/components/HeartRateCard'
 import ResearchCard from '@/components/ResearchCard'
+import ImageUpload from '@/components/ImageUpload'
 import { TrendingUp, Activity, Users, FileCheck } from 'lucide-react'
+import { AnalysisResult } from '@/services/api'
 
 export default function Home() {
+  const [latestAnalysis, setLatestAnalysis] = useState<AnalysisResult | null>(null)
+
+  const handleAnalysisComplete = (result: AnalysisResult) => {
+    setLatestAnalysis(result)
+  }
+
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
       {/* Sidebar */}
@@ -21,9 +29,14 @@ export default function Home() {
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-12 gap-6">
-          {/* DNA Visualization - Large */}
-          <div className="col-span-7 row-span-2">
-            <div className="h-full min-h-[600px]">
+          {/* Image Upload & Analysis - Large */}
+          <div className="col-span-7">
+            <ImageUpload onAnalysisComplete={handleAnalysisComplete} />
+          </div>
+
+          {/* DNA Visualization */}
+          <div className="col-span-7">
+            <div className="h-full min-h-[400px]">
               <DNAVisualization />
             </div>
           </div>
@@ -33,21 +46,19 @@ export default function Home() {
             {/* Stats Cards */}
             <div className="grid grid-cols-2 gap-4">
               <StatsCard
-                title="Progress"
-                value="27"
-                subtitle="Analysis in progress"
+                title="Quality Score"
+                value={latestAnalysis ? latestAnalysis.result.global_score.toFixed(1) : "--"}
+                subtitle={latestAnalysis ? "Latest analysis" : "No analysis yet"}
                 icon={TrendingUp}
-                trend="up"
-                trendValue="+12%"
+                trend={latestAnalysis && latestAnalysis.result.global_score >= 70 ? "up" : undefined}
+                trendValue={latestAnalysis ? `${latestAnalysis.result.confidence.toFixed(0)}% conf` : undefined}
                 color="purple"
               />
               <StatsCard
-                title="Completed"
-                value="31"
-                subtitle="Active treatments"
+                title="ML Readiness"
+                value={latestAnalysis ? latestAnalysis.result.ml_readiness : "--"}
+                subtitle={latestAnalysis ? latestAnalysis.result.clinical_adequacy : "Waiting for upload"}
                 icon={FileCheck}
-                trend="up"
-                trendValue="+8%"
                 color="blue"
               />
             </div>
