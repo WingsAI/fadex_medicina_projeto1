@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Sidebar from '@/components/Sidebar'
 import Header from '@/components/Header'
-import DNAVisualization from '@/components/DNAVisualization'
 import StatsCard from '@/components/StatsCard'
 import HeartRateCard from '@/components/HeartRateCard'
 import ResearchCard from '@/components/ResearchCard'
@@ -19,26 +18,20 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900 p-8 flex items-center justify-center">
+      <div className="w-full max-w-[1800px] h-[95vh] bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 rounded-3xl shadow-2xl overflow-hidden flex">
+        {/* Sidebar */}
+        <Sidebar />
 
-      {/* Main Content */}
-      <main className="flex-1 p-8 overflow-auto">
-        <Header />
+        {/* Main Content */}
+        <main className="flex-1 p-8 overflow-auto">
+          <Header />
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-12 gap-6">
           {/* Image Upload & Analysis - Large */}
-          <div className="col-span-7">
+          <div className="col-span-7 row-span-2">
             <ImageUpload onAnalysisComplete={handleAnalysisComplete} />
-          </div>
-
-          {/* DNA Visualization */}
-          <div className="col-span-7">
-            <div className="h-full min-h-[400px]">
-              <DNAVisualization />
-            </div>
           </div>
 
           {/* Right Column */}
@@ -154,6 +147,7 @@ export default function Home() {
           </p>
         </div>
       </main>
+      </div>
     </div>
   )
 }

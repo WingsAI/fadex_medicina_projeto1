@@ -39,7 +39,7 @@ export default function Sidebar() {
     <aside className="w-64 h-screen bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col">
       {/* Logo */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold gradient-text">MYDNA</h1>
+        <h1 className="text-2xl font-bold gradient-text">WingsAI</h1>
         <p className="text-xs text-slate-500 mt-1">SNPQIM Medical Platform</p>
       </div>
 
