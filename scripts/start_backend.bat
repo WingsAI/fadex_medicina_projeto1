@@ -6,10 +6,11 @@ echo.
 
 cd /d "%~dp0\.."
 
-REM Verifica se ambiente virtual existe
-if not exist "venv\Scripts\activate.bat" (
+REM Verifica se Conda esta disponivel
+conda --version >nul 2>&1
+if errorlevel 1 (
     echo.
-    echo ERRO: Ambiente virtual nao encontrado!
+    echo ERRO: Conda nao encontrado!
     echo.
     echo Execute primeiro: scripts\setup_env.bat
     echo.
@@ -17,8 +18,20 @@ if not exist "venv\Scripts\activate.bat" (
     exit /b 1
 )
 
-echo Ativando ambiente virtual...
-call venv\Scripts\activate.bat
+REM Verifica se ambiente snpqim existe
+conda env list | findstr "snpqim" >nul 2>&1
+if errorlevel 1 (
+    echo.
+    echo ERRO: Ambiente 'snpqim' nao encontrado!
+    echo.
+    echo Execute primeiro: scripts\setup_env.bat
+    echo.
+    pause
+    exit /b 1
+)
+
+echo Ativando ambiente Conda 'snpqim'...
+call conda activate snpqim
 
 echo.
 echo Iniciando API em http://localhost:8000

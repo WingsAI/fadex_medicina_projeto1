@@ -1,43 +1,38 @@
 @echo off
 echo ================================================
-echo  SNPQIM - Configuracao de Ambiente
+echo  SNPQIM - Configuracao de Ambiente (Conda)
 echo ================================================
 echo.
 
 cd /d "%~dp0\.."
 
-echo Verificando Python...
-python --version >nul 2>&1
+echo Verificando Conda...
+conda --version >nul 2>&1
 if errorlevel 1 (
-    echo ERRO: Python nao encontrado!
+    echo ERRO: Conda nao encontrado!
     echo.
-    echo Instale Python 3.9+ de: https://www.python.org/downloads/
-    echo.
-    echo IMPORTANTE: Durante instalacao, marque:
-    echo   [x] Add Python to PATH
+    echo Instale Anaconda ou Miniconda de:
+    echo   https://www.anaconda.com/download
     echo.
     pause
     exit /b 1
 )
 
-python --version
+conda --version
 
 echo.
-echo Criando ambiente virtual...
-if exist "venv\" (
-    echo Ambiente virtual ja existe. Removendo...
-    rmdir /s /q venv
+echo Verificando ambiente 'snpqim'...
+conda env list | findstr "snpqim" >nul 2>&1
+if errorlevel 1 (
+    echo Criando ambiente Conda 'snpqim' com Python 3.11...
+    conda create -n snpqim python=3.11 -y
+) else (
+    echo Ambiente 'snpqim' ja existe.
 )
 
-python -m venv venv
-
 echo.
-echo Ativando ambiente virtual...
-call venv\Scripts\activate.bat
-
-echo.
-echo Atualizando pip...
-python -m pip install --upgrade pip
+echo Ativando ambiente snpqim...
+call conda activate snpqim
 
 echo.
 echo Instalando dependencias do backend...
@@ -52,6 +47,8 @@ echo.
 echo Proximos passos:
 echo   1. Use os scripts em scripts/ para iniciar
 echo   2. Ou ative o ambiente manualmente:
-echo      venv\Scripts\activate.bat
+echo      conda activate snpqim
+echo.
+echo Ambiente: snpqim (Python 3.11)
 echo.
 pause
