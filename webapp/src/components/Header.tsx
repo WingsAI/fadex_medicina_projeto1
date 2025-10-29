@@ -2,11 +2,17 @@
 
 import React from 'react'
 import { Bell, Settings } from 'lucide-react'
+import ApiStatus from './ApiStatus'
 
 export default function Header() {
   return (
     <header className="flex items-center justify-between mb-8">
-      {/* Time Period Selector */}
+      {/* Left Side - API Status */}
+      <div className="flex items-center gap-4">
+        <ApiStatus />
+      </div>
+
+      {/* Center - Time Period Selector */}
       <div className="flex items-center gap-2">
         <button className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all">
           Day
