@@ -1,351 +1,319 @@
-# 🔧 FADEX - Solução de Problemas
+# 🔧 SNPQIM - Solução de Problemas
 
-Guia rápido para resolver problemas comuns.
+Guia rápido e completo para resolver problemas nas três versões do sistema.
 
 ---
 
-## 🚨 Problema: NumPy 2.x Incompatível
+## 🎯 Navegação Rápida
 
-### Sintomas
+- [Problemas no Webapp (Next.js)](#webapp-nextjs)
+- [Problemas no Backend (FastAPI)](#backend-fastapi)
+- [Problemas na CLI](#cli-linha-de-comando)
+- [Problemas com Dependências](#dependências)
+
+---
+
+## 🌐 Webapp (Next.js)
+
+### ❌ Erro: "Module not found: Can't resolve..."
+
+**Sintoma**:
+```
+Module not found: Can't resolve '@/components/...'
+```
+
+**Solução**:
+```bash
+cd webapp
+rm -rf node_modules package-lock.json .next
+npm install
+npm run dev
+```
+
+### ❌ Erro: Porta 3000 em uso
+
+**Sintoma**:
+```
+Error: listen EADDRINUSE: address already in use :::3000
+```
+
+**Solução**:
+```bash
+# Use porta alternativa
+npm run dev -- -p 3001
+```
+
+### ❌ Build falha com erro de TypeScript
+
+**Solução**:
+```bash
+cd webapp
+npm run build -- --no-lint
+```
+
+Se persistir, verifique [tsconfig.json](webapp/tsconfig.json)
+
+---
+
+## 🔌 Backend (FastAPI)
+
+### ❌ Erro 500 ao analisar imagem
+
+**Sintoma**: API retorna erro 500 ao fazer POST em `/api/v1/analyze`
+
+**Causa comum**: Problema com imports ou imagem inválida
+
+**Solução**:
+```bash
+# 1. Teste o endpoint de debug
+curl http://localhost:8000/api/v1/debug
+
+# 2. Verifique logs do servidor
+# Procure por stacktrace detalhado
+
+# 3. Teste com imagem de teste válida
+python scripts/create_test_images.py
+python scripts/test_api.py
+```
+
+### ❌ ModuleNotFoundError: No module named 'ml'
+
+**Sintoma**:
+```
+ModuleNotFoundError: No module named 'ml'
+```
+
+**Causa**: Executando de diretório errado
+
+**Solução**:
+```bash
+# Sempre execute da raiz do projeto
+cd /caminho/para/fadex_medicina_projeto1
+python src/backend/main.py
+```
+
+### ❌ CORS Error no Frontend
+
+**Sintoma**: Frontend não consegue fazer requisições
+
+**Solução**: Backend já está configurado com CORS. Verifique se a URL está correta no frontend.
+
+---
+
+## 🖥️ CLI (Linha de Comando)
+
+### ❌ Script não encontrado
+
+**Sintoma**:
+```
+python: can't open file 'test_fadex.py'
+```
+
+**Solução**:
+```bash
+# Execute da raiz do projeto
+cd /caminho/para/fadex_medicina_projeto1
+python scripts/test_fadex.py examples/ --batch
+```
+
+### ❌ Nenhuma imagem encontrada
+
+**Sintoma**: "No images found in directory"
+
+**Solução**:
+```bash
+# Gere imagens de teste
+python scripts/create_test_images.py
+
+# Analise
+python scripts/test_fadex.py examples/ --batch
+```
+
+---
+
+## 📦 Dependências
+
+### ❌ NumPy 2.x Incompatível com PyTorch
+
+**Sintoma**:
 ```
 A module that was compiled using NumPy 1.x cannot be run in NumPy 2.2.6
 ```
 
-ou
-
-```
-cv2.error: OpenCV(4.12.0) ... Unsupported combination of source format
-```
-
-### ✅ Solução Automática (Recomendada)
-
+**Solução Automática**:
 ```bash
 ./scripts/fix_numpy.sh
 ```
 
-### ✅ Solução Manual
-
+**Solução Manual**:
 ```bash
 pip uninstall numpy -y
 pip install "numpy<2"
 pip install -r requirements-minimal.txt --force-reinstall
 ```
 
-📖 Detalhes: [FIX_NUMPY.md](FIX_NUMPY.md)
+### ❌ OpenCV Error: Unsupported format
 
----
-
-## 🚨 Problema: Module not found 'ml'
-
-### Sintomas
+**Sintoma**:
 ```
-ModuleNotFoundError: No module named 'ml'
+cv2.error: OpenCV(4.12.0) ... Unsupported combination of source format
 ```
 
-### ✅ Solução
+**Causa**: NumPy 2.x incompatível
 
-Você está executando de dentro da pasta `scripts/`. Execute da raiz:
+**Solução**: Mesma do NumPy acima
 
+### ❌ Pillow/PIL Errors
+
+**Solução**:
 ```bash
-cd ..  # Volta para a raiz do projeto
-python3 scripts/test_fadex.py examples/ --batch
+pip uninstall Pillow PIL -y
+pip install Pillow==10.2.0
 ```
 
-**Sempre execute scripts da raiz do projeto!**
+### ❌ Erro ao instalar PyTorch
 
----
+**Sintoma**: Instalação falha ou muito lenta
 
-## 🚨 Problema: No images found
-
-### Sintomas
-```
-❌ Nenhuma imagem encontrada em examples/
-```
-
-### ✅ Solução
-
+**Solução**:
 ```bash
-python3 scripts/create_test_images.py
+# Use apenas CPU (mais rápido)
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# Para GPU (CUDA)
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 ```
 
 ---
 
-## 🚨 Problema: API não conecta
+## 🐳 Docker
 
-### Sintomas
-```
-❌ Não foi possível conectar à API em http://localhost:8000
-```
+### ❌ Container não inicia
 
-### ✅ Solução
-
-A API não está rodando. Em outro terminal:
-
+**Solução**:
 ```bash
-python3 src/backend/main.py
+# Reconstrua a imagem
+docker-compose down
+docker-compose build --no-cache
+docker-compose up
 ```
 
-Depois teste novamente:
+### ❌ Porta em uso
 
-```bash
-python3 scripts/test_api.py
-```
+**Solução**: Edite `docker-compose.yml` para mudar portas
 
 ---
 
-## 🚨 Problema: Permission denied
+## 💡 Problemas Comuns Gerais
 
-### Sintomas
-```
--bash: ./scripts/start.sh: Permission denied
-```
+### ❌ Permissão Negada
 
-### ✅ Solução
-
+**Linux/Mac**:
 ```bash
 chmod +x scripts/*.sh
-./scripts/start.sh
 ```
 
----
+### ❌ Git line ending warnings
 
-## 🚨 Problema: torch import error
-
-### Sintomas
-```
-ImportError: cannot import name '_C' from 'torch'
-```
-
-### ✅ Solução
-
-PyTorch corrompido. Reinstale:
-
+**Solução**: Configure git (Windows):
 ```bash
-pip uninstall torch torchvision -y
-pip install torch torchvision
+git config --global core.autocrlf true
 ```
 
----
+### ❌ Python não encontrado
 
-## 🚨 Problema: opencv-python não funciona
-
-### Sintomas
-```
-ImportError: libGL.so.1: cannot open shared object file
-```
-
-### ✅ Solução (Linux)
-
-```bash
-sudo apt-get install libgl1-mesa-glx libglib2.0-0
-```
-
-### ✅ Solução (macOS)
-
-```bash
-brew install opencv
-```
-
-### ✅ Solução (Windows)
-
-Reinstale opencv-python:
-
-```bash
-pip uninstall opencv-python -y
-pip install opencv-python-headless
-```
-
----
-
-## 🚨 Problema: Script congela/demora muito
-
-### Sintomas
-Script não responde ou leva mais de 30s por imagem.
-
-### ✅ Solução
-
-1. **Imagens muito grandes**: Redimensione para máximo 1024x1024px
-2. **CPU lenta**: Normal levar 3-5s por imagem
-3. **Sem GPU**: PyTorch usa CPU por padrão (mais lento mas funciona)
-
-Para melhorar performance:
-```bash
-# Instale versão CPU otimizada do PyTorch
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-```
-
----
-
-## 🚨 Problema: Docker build falha
-
-### Sintomas
-```
-ERROR: failed to solve: process "/bin/sh -c pip install..." did not complete
-```
-
-### ✅ Solução
-
-Limpe cache do Docker:
-
-```bash
-docker system prune -a
-docker-compose build --no-cache
-```
-
----
-
-## 🚨 Problema: Importação no Python falha
-
-### Sintomas
-```python
-from src.ml.scoring.fadex_core import analyze_image_quality
-ImportError: No module named 'src'
-```
-
-### ✅ Solução
-
-Use imports relativos ou adicione ao path:
-
-```python
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
-
-from ml.scoring.fadex_core import analyze_image_quality
-```
-
----
-
-## 🚨 Problema: Results directory não existe
-
-### Sintomas
-```
-FileNotFoundError: [Errno 2] No such file or directory: 'results/'
-```
-
-### ✅ Solução
-
-Será criado automaticamente. Ou crie manualmente:
-
-```bash
-mkdir results
-```
-
----
-
-## 🚨 Problema: Out of memory
-
-### Sintomas
-```
-RuntimeError: [enforce fail at alloc_cpu.cpp:...] . DefaultCPUAllocator: can't allocate memory
-```
-
-### ✅ Solução
-
-1. **Processe menos imagens por vez**:
-```bash
-python3 scripts/test_fadex.py examples/fundus_high_quality.png  # Uma por vez
-```
-
-2. **Reduza resolução das imagens**:
-```python
-import cv2
-image = cv2.imread('image.png')
-image = cv2.resize(image, (512, 512))  # Reduz para 512x512
-```
-
----
-
-## 🚨 Problema: Python version incompatível
-
-### Sintomas
-```
-SyntaxError: invalid syntax
-```
-
-ou
-
-```
-requires Python >=3.9
-```
-
-### ✅ Solução
-
-Atualize o Python:
+**Windows**: Use `python` ou `py`
+**Linux/Mac**: Use `python3`
 
 ```bash
 # Verifique versão
-python3 --version
-
-# Deve ser 3.9+
-# Se não, instale Python mais novo:
-# macOS: brew install python@3.11
-# Ubuntu: sudo apt install python3.11
-# Windows: baixe do python.org
+python --version
+# Deve ser >= 3.9
 ```
 
 ---
 
-## 🔍 Diagnóstico Geral
+## 🆘 Ainda com Problemas?
 
-Se nada funcionou, execute o diagnóstico completo:
+### Verificação Completa do Setup
 
+Execute o script de verificação:
 ```bash
-python3 scripts/verify_setup.py
+python scripts/verify_setup.py
 ```
 
-Isso verifica:
+Este script verifica:
 - ✅ Versão do Python
-- ✅ Arquivos essenciais
 - ✅ Dependências instaladas
-- ✅ Estrutura de pastas
+- ✅ Estrutura de diretórios
+- ✅ Permissões de arquivos
 
----
+### Logs Detalhados
 
-## 📞 Ainda Precisa de Ajuda?
-
-### Checklist Antes de Pedir Ajuda
-
-- [ ] Python 3.9+ instalado? (`python3 --version`)
-- [ ] Dependências instaladas? (`pip list | grep numpy`)
-- [ ] Executando da raiz? (`pwd` deve mostrar `.../fadex_medicina_projeto1`)
-- [ ] Imagens de teste criadas? (`ls examples/`)
-- [ ] Tentou `./scripts/fix_numpy.sh`?
-
-### Como Reportar
-
-Abra uma issue no GitHub com:
-
-1. **Comando executado**:
+#### Backend
 ```bash
-python3 scripts/test_fadex.py examples/ --batch
+python src/backend/main.py 2>&1 | tee backend.log
 ```
 
-2. **Erro completo** (últimas 20 linhas)
-
-3. **Seu ambiente**:
+#### CLI
 ```bash
-python3 --version
-pip list | grep -E "(numpy|opencv|torch)"
-uname -a  # ou: systeminfo (Windows)
+python scripts/test_fadex.py examples/ --verbose > cli.log 2>&1
 ```
 
-4. **O que já tentou**
+### Teste Rápido de Tudo
+
+```bash
+# 1. Teste dependências
+python scripts/verify_setup.py
+
+# 2. Teste algoritmo core
+python scripts/test_fadex.py examples/ --batch
+
+# 3. Teste API
+python scripts/test_api_quick.py
+
+# 4. Teste webapp
+cd webapp && npm run build
+```
 
 ---
 
 ## 📚 Documentação Adicional
 
-- [START_HERE.md](docs/START_HERE.md) - Primeiro acesso
-- [QUICKSTART.md](docs/QUICKSTART.md) - Guia rápido
-- [SETUP.md](docs/SETUP.md) - Setup detalhado
-- [FIX_NUMPY.md](FIX_NUMPY.md) - Problema específico do NumPy
+- **Setup Inicial**: [docs/SETUP.md](docs/SETUP.md)
+- **Guia Rápido**: [docs/QUICKSTART.md](docs/QUICKSTART.md)
+- **Múltiplas Versões**: [VERSOES.md](VERSOES.md)
+- **Início**: [docs/START_HERE.md](docs/START_HERE.md)
 
 ---
 
-**99% dos problemas são resolvidos com**:
-1. `./scripts/fix_numpy.sh` (NumPy)
-2. `python3 scripts/create_test_images.py` (Imagens)
-3. Executar da raiz do projeto (imports)
+## 🔍 Debug Avançado
 
-Boa sorte! 🍀
+### Ativar Logs Detalhados
+
+**Backend**:
+```python
+# Em src/backend/main.py
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+**CLI**:
+```bash
+python scripts/test_fadex.py examples/ --verbose --debug
+```
+
+### Testar Componentes Isoladamente
+
+```bash
+# Teste apenas o algoritmo core
+python -c "from src.ml.scoring.fadex_core import analyze_image_quality; print('OK')"
+
+# Teste imports do webapp
+cd webapp && npm run build -- --debug
+```
+
+---
+
+**Última atualização**: Outubro 2025
+**Versão**: 2.0 - Consolidado e atualizado para SNPQIM
