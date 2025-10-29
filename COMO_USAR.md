@@ -1,5 +1,25 @@
 # 🚀 Como Usar o SNPQIM - Guia Rápido
 
+## ⚠️ PRIMEIRO USO? CONFIGURE O AMBIENTE!
+
+**Se você nunca configurou antes**, execute APENAS UMA VEZ:
+
+```bash
+# Clique duas vezes em:
+scripts\setup_env.bat
+
+# Ou execute:
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements-backend.txt
+```
+
+Isso cria um ambiente isolado e instala todas as dependências.
+
+📖 **Problemas?** Veja [SETUP_RAPIDO.md](SETUP_RAPIDO.md)
+
+---
+
 ## ⚡ Método Mais Fácil (Windows)
 
 ### **Opção 1: Iniciar Tudo de Uma Vez**

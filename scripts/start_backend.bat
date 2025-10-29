@@ -6,14 +6,19 @@ echo.
 
 cd /d "%~dp0\.."
 
-echo Verificando dependencias...
-python --version >nul 2>&1
-if errorlevel 1 (
-    echo ERRO: Python nao encontrado!
-    echo Instale Python 3.9+ e tente novamente.
+REM Verifica se ambiente virtual existe
+if not exist "venv\Scripts\activate.bat" (
+    echo.
+    echo ERRO: Ambiente virtual nao encontrado!
+    echo.
+    echo Execute primeiro: scripts\setup_env.bat
+    echo.
     pause
     exit /b 1
 )
+
+echo Ativando ambiente virtual...
+call venv\Scripts\activate.bat
 
 echo.
 echo Iniciando API em http://localhost:8000
