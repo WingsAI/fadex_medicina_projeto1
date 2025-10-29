@@ -1,5 +1,5 @@
 """
-FADEX Training Pipeline
+SNPQIM Training Pipeline
 Pipeline modular para treinamento de modelos de qualidade de imagens médicas
 Suporte para MLflow, Weights & Biases, TensorBoard
 """
@@ -35,10 +35,10 @@ try:
 except ImportError:
     WANDB_AVAILABLE = False
 
-from ..models.quality_cnn import create_fadex_model, FadexQualityResNet, FadexEnsembleModel
-from ..data.dataset import FadexImageDataset, get_data_loaders
-from .losses import FadexQualityLoss, DimensionAwareLoss
-from .metrics import FadexQualityMetrics
+from ..models.quality_cnn import create_snpqim_model, SnpqimQualityResNet, SnpqimEnsembleModel
+from ..data.dataset import SnpqimImageDataset, get_data_loaders
+from .losses import SnpqimQualityLoss, DimensionAwareLoss
+from .metrics import SnpqimQualityMetrics
 
 
 @dataclass
@@ -57,7 +57,7 @@ class TrainingConfig:
     scheduler: str = 'cosine'  # cosine, step, plateau
     
     # Loss Configuration
-    loss_type: str = 'fadex_quality'  # fadex_quality, dimension_aware, mse
+    loss_type: str = 'snpqim_quality'  # snpqim_quality, dimension_aware, mse
     loss_weights: Dict[str, float] = None
     
     # Data Configuration
@@ -73,7 +73,7 @@ class TrainingConfig:
     grad_clip_norm: float = 1.0
     
     # Experiment Tracking
-    experiment_name: str = "fadex_quality_training"
+    experiment_name: str = "snpqim_quality_training"
     experiment_tracker: str = "tensorboard"  # tensorboard, mlflow, wandb
     log_interval: int = 10
     save_interval: int = 5
@@ -97,9 +97,9 @@ class TrainingConfig:
             }
 
 
-class FadexTrainer:
+class SnpqimTrainer:
     """
-    Trainer principal para modelos FADEX
+    Trainer principal para modelos SNPQIM
     Suporte para múltiplos backends de experiment tracking
     """
     
@@ -182,7 +182,7 @@ class FadexTrainer:
     
     def prepare_model(self) -> nn.Module:
         """Prepara modelo para treinamento"""
-        self.model = create_fadex_model(self.config.model_config)
+        self.model = create_snpqim_model(self.config.model_config)
         self.model.to(self.device)
         
         # Log model info
@@ -270,8 +270,8 @@ class FadexTrainer:
     
     def prepare_criterion(self) -> nn.Module:
         """Prepara loss function"""
-        if self.config.loss_type == 'fadex_quality':
-            self.criterion = FadexQualityLoss(
+        if self.config.loss_type == 'snpqim_quality':
+            self.criterion = SnpqimQualityLoss(
                 weights=self.config.loss_weights,
                 device=self.device
             )
@@ -288,9 +288,9 @@ class FadexTrainer:
         self.logger.info(f"Loss function: {self.criterion.__class__.__name__}")
         return self.criterion
     
-    def prepare_metrics(self) -> FadexQualityMetrics:
+    def prepare_metrics(self) -> SnpqimQualityMetrics:
         """Prepara métricas de avaliação"""
-        self.metrics = FadexQualityMetrics(device=self.device)
+        self.metrics = SnpqimQualityMetrics(device=self.device)
         return self.metrics
     
     def setup_training(self):
@@ -535,8 +535,8 @@ if __name__ == "__main__":
         batch_size=16,
         learning_rate=1e-4,
         num_epochs=50,
-        experiment_name="fadex_quality_test"
+        experiment_name="snpqim_quality_test"
     )
     
-    trainer = FadexTrainer(config)
+    trainer = SnpqimTrainer(config)
     trainer.train()

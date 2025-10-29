@@ -1,4 +1,4 @@
-# 💻 FADEX - Source Code Structure
+# 💻 SNPQIM - Source Code Structure
 
 **Organização modular e escalável do código-fonte**
 

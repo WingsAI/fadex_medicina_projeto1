@@ -1,5 +1,5 @@
 """
-FADEX Custom Loss Functions
+SNPQIM Custom Loss Functions
 Loss functions proprietárias otimizadas para quality assessment de imagens médicas
 """
 
@@ -10,9 +10,9 @@ import numpy as np
 from typing import Dict, List, Optional, Union
 
 
-class FadexQualityLoss(nn.Module):
+class SnpqimQualityLoss(nn.Module):
     """
-    Loss function proprietária FADEX para quality assessment
+    Loss function proprietária SNPQIM para quality assessment
     Combina múltiplos objetivos específicos para imagens médicas
     PROPRIEDADE INTELECTUAL
     """
@@ -23,7 +23,7 @@ class FadexQualityLoss(nn.Module):
         device: torch.device = None,
         smoothing_factor: float = 0.1
     ):
-        super(FadexQualityLoss, self).__init__()
+        super(SnpqimQualityLoss, self).__init__()
         
         self.device = device or torch.device('cpu')
         self.smoothing_factor = smoothing_factor
@@ -69,7 +69,7 @@ class FadexQualityLoss(nn.Module):
         dimension_loss = self._calculate_dimension_loss(predictions, targets)
         losses['dimension_loss'] = dimension_loss
         
-        # 3. Consistency Loss (propriedade FADEX)
+        # 3. Consistency Loss (propriedade SNPQIM)
         consistency_loss = self._calculate_consistency_loss(predictions, targets)
         losses['consistency_loss'] = consistency_loss
         
@@ -101,7 +101,7 @@ class FadexQualityLoss(nn.Module):
     ) -> torch.Tensor:
         """
         Loss para scores dimensionais individuais
-        Propriedade intelectual FADEX
+        Propriedade intelectual SNPQIM
         """
         dimension_losses = []
         
@@ -134,7 +134,7 @@ class FadexQualityLoss(nn.Module):
     ) -> torch.Tensor:
         """
         Loss de consistência entre global score e dimension scores
-        ALGORITMO PROPRIETÁRIO FADEX
+        ALGORITMO PROPRIETÁRIO SNPQIM
         """
         pred_global = predictions.get('global_score', torch.tensor(0.0))
         pred_dimensions = predictions.get('dimension_scores', {})
@@ -358,7 +358,7 @@ class MultiTaskQualityLoss(nn.Module):
         }
         
         # Loss functions para cada tarefa
-        self.quality_loss = FadexQualityLoss(device=device)
+        self.quality_loss = SnpqimQualityLoss(device=device)
         self.classification_loss = nn.CrossEntropyLoss()
         self.segmentation_loss = nn.BCEWithLogitsLoss()
         
@@ -404,7 +404,7 @@ class MultiTaskQualityLoss(nn.Module):
 
 def create_loss_function(loss_config: Dict) -> nn.Module:
     """
-    Factory function para criar loss functions FADEX
+    Factory function para criar loss functions SNPQIM
     
     Args:
         loss_config: Configuração da loss function
@@ -412,10 +412,10 @@ def create_loss_function(loss_config: Dict) -> nn.Module:
     Returns:
         Loss function inicializada
     """
-    loss_type = loss_config.get('type', 'fadex_quality')
+    loss_type = loss_config.get('type', 'snpqim_quality')
     
-    if loss_type == 'fadex_quality':
-        return FadexQualityLoss(**loss_config.get('params', {}))
+    if loss_type == 'snpqim_quality':
+        return SnpqimQualityLoss(**loss_config.get('params', {}))
     elif loss_type == 'dimension_aware':
         return DimensionAwareLoss(**loss_config.get('params', {}))
     elif loss_type == 'robust':
@@ -430,8 +430,8 @@ def create_loss_function(loss_config: Dict) -> nn.Module:
 
 # Configurações de loss pré-definidas
 LOSS_CONFIGS = {
-    'fadex_standard': {
-        'type': 'fadex_quality',
+    'snpqim_standard': {
+        'type': 'snpqim_quality',
         'params': {
             'weights': {
                 'global_score': 0.4,
@@ -511,11 +511,11 @@ if __name__ == "__main__":
         'confidence': torch.rand(batch_size, 1) * 100
     }
     
-    # Teste FADEX Quality Loss
-    fadex_loss = FadexQualityLoss(device=device)
-    losses = fadex_loss(predictions, targets)
+    # Teste SNPQIM Quality Loss
+    snpqim_loss = SnpqimQualityLoss(device=device)
+    losses = snpqim_loss(predictions, targets)
     
-    print("FADEX Quality Loss Results:")
+    print("SNPQIM Quality Loss Results:")
     for loss_name, loss_value in losses.items():
         print(f"  {loss_name}: {loss_value.item():.4f}")
     

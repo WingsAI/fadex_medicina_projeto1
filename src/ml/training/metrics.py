@@ -1,5 +1,5 @@
 """
-FADEX Quality Metrics
+SNPQIM Quality Metrics
 Métricas especializadas para avaliação de modelos de quality assessment
 """
 
@@ -147,7 +147,7 @@ class FadexQualityMetrics:
         clinical_metrics = self._compute_clinical_metrics()
         metrics.update(clinical_metrics)
         
-        # Overall Score (métrica proprietária FADEX)
+        # Overall Score (métrica proprietária SNPQIM)
         if self.predictions['global_scores']:
             overall_score = self._compute_fadex_overall_score(metrics)
             metrics['fadex_overall_score'] = overall_score
@@ -271,7 +271,7 @@ class FadexQualityMetrics:
     def _compute_clinical_metrics(self) -> Dict[str, float]:
         """
         Computa métricas específicas para contexto clínico
-        Propriedade intelectual FADEX
+        Propriedade intelectual SNPQIM
         """
         if not self.predictions['global_scores']:
             return {}
@@ -336,11 +336,11 @@ class FadexQualityMetrics:
     
     def _compute_fadex_overall_score(self, metrics: Dict[str, float]) -> float:
         """
-        Computa score geral proprietário FADEX
+        Computa score geral proprietário SNPQIM
         Combina múltiplas métricas com pesos específicos para medicina
         PROPRIEDADE INTELECTUAL
         """
-        # Componentes do score FADEX (0-100)
+        # Componentes do score SNPQIM (0-100)
         components = {}
         
         # 1. Accuracy Component (40%)
@@ -366,7 +366,7 @@ class FadexQualityMetrics:
         # Baseado na taxa de concordância clínica
         agreement_component = metrics.get('clinical_agreement_rate', 0) * 100
         
-        # Combinação ponderada (fórmula proprietária FADEX)
+        # Combinação ponderada (fórmula proprietária SNPQIM)
         weights = [0.40, 0.30, 0.20, 0.10]
         components_list = [
             accuracy_component,
@@ -385,11 +385,11 @@ class FadexQualityMetrics:
         """
         metrics = self.compute()
         
-        summary = "=== FADEX QUALITY METRICS SUMMARY ===\n\n"
+        summary = "=== SNPQIM QUALITY METRICS SUMMARY ===\n\n"
         
         # Overall Performance
         if 'fadex_overall_score' in metrics:
-            summary += f"FADEX Overall Score: {metrics['fadex_overall_score']:.1f}/100\n\n"
+            summary += f"SNPQIM Overall Score: {metrics['fadex_overall_score']:.1f}/100\n\n"
         
         # Global Score Performance
         if 'global_r2' in metrics:

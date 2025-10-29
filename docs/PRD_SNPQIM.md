@@ -1,14 +1,14 @@
-# 📋 PRD - FADEX Sistema Nacional de Qualidade de Imagens Médicas
+# 📋 PRD - SNPQIM Sistema Nacional de Qualidade de Imagens Médicas
 
 **Product Requirements Document - Versão 1.0**
 
-#fadex #prd #requirements #produto #especificacoes
+#snpqim #prd #requirements #produto #especificacoes
 
 ---
 
 ## 🎯 **EXECUTIVE SUMMARY**
 
-### **Produto**: FADEX - Sistema Nacional para Padronização da Qualidade de Imagens Médicas
+### **Produto**: SNPQIM - Sistema Nacional para Padronização da Qualidade de Imagens Médicas
 ### **Versão**: 1.0 MVP → 3.0 Enterprise
 ### **Timeline**: 18 meses para TRL 6
 ### **Investment**: R$ 2.100.000,00

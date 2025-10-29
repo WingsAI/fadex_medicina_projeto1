@@ -1,8 +1,8 @@
-# 🚀 GUIA DE DESENVOLVIMENTO - FADEX
+# 🚀 GUIA DE DESENVOLVIMENTO - SNPQIM
 
 **Roadmap detalhado para implementação do Sistema Nacional de Qualidade de Imagens Médicas**
 
-#fadex #desenvolvimento #guia #roadmap #implementacao
+#snpqim #desenvolvimento #guia #roadmap #implementacao
 
 ---
 
