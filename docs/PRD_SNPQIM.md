@@ -157,8 +157,8 @@ def recommend_ml_models(quality_score, image_metadata):
 - **FR-020**: Suporte a querying por Study/Series/Instance UIDs
 
 #### **Integration Patterns**:
-- **PULL**: Sistema FADEX busca imagens do PACS
-- **PUSH**: PACS envia imagens para FADEX via webhook
+- **PULL**: Sistema WingsAI busca imagens do PACS
+- **PUSH**: PACS envia imagens para WingsAI via webhook
 - **HYBRID**: Combinação baseada em workflows clínicos
 
 ### **5. ANALYTICS DASHBOARD**
@@ -243,7 +243,7 @@ def recommend_ml_models(quality_score, image_metadata):
 ```yaml
 openapi: 3.0.0
 info:
-  title: FADEX API
+  title: WingsAI API
   version: 1.0.0
 paths:
   /api/v1/images/upload:

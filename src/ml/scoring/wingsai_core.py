@@ -1,9 +1,9 @@
 """
-FADEX Core Scoring System
+WingsAI Core Scoring System
 Sistema proprietário de scoring de qualidade de imagens médicas oftalmológicas
-PROPRIEDADE INTELECTUAL FADEX - ALGORITMO PATENTEÁVEL
+PROPRIEDADE INTELECTUAL WingsAI - ALGORITMO PATENTEÁVEL
 
-Este módulo implementa o algoritmo core proprietário da FADEX para:
+Este módulo implementa o algoritmo core proprietário da WingsAI para:
 1. Quality Assessment Multi-dimensional 
 2. Clinical Adequacy Scoring
 3. ML Readiness Assessment
@@ -34,8 +34,8 @@ class QualityDimension(Enum):
 
 
 @dataclass
-class FadexScore:
-    """Estrutura do score FADEX proprietário"""
+class WingsAIScore:
+    """Estrutura do score WingsAI proprietário"""
     global_score: float  # Score global 0-100
     dimension_scores: Dict[str, float]  # Scores por dimensão
     confidence: float  # Confidence do score
@@ -45,9 +45,9 @@ class FadexScore:
     metadata: Dict[str, any]  # Metadata adicional
 
 
-class FadexQualityAnalyzer:
+class WingsAIQualityAnalyzer:
     """
-    Analisador principal de qualidade FADEX
+    Analisador principal de qualidade WingsAI
     ALGORITMO PROPRIETÁRIO para avaliação multi-dimensional
     """
     
@@ -101,10 +101,10 @@ class FadexQualityAnalyzer:
         image: Union[np.ndarray, torch.Tensor],
         exam_type: str = 'fundoscopy',
         metadata: Optional[Dict] = None
-    ) -> FadexScore:
+    ) -> WingsAIScore:
         """
         Análise principal de qualidade da imagem
-        ALGORITMO PROPRIETÁRIO FADEX
+        ALGORITMO PROPRIETÁRIO WingsAI
         
         Args:
             image: Imagem para análise
@@ -112,52 +112,52 @@ class FadexQualityAnalyzer:
             metadata: Metadata adicional da imagem
             
         Returns:
-            FadexScore com análise completa
+            WingsAIScore com análise completa
         """
         # Preprocessamento da imagem
         processed_image = self._preprocess_image(image)
-        
+
         # Análise por dimensões específicas (algoritmo proprietário)
         dimension_scores = {}
-        
-        # 1. Análise de nitidez (propriedade intelectual FADEX)
+
+        # 1. Análise de nitidez (propriedade intelectual WingsAI)
         dimension_scores['sharpness'] = self._analyze_sharpness(processed_image)
         
         # 2. Análise de exposição (algoritmo proprietário)
         dimension_scores['exposure'] = self._analyze_exposure(processed_image)
         
-        # 3. Análise de contraste (método FADEX)
+        # 3. Análise de contraste (método WingsAI)
         dimension_scores['contrast'] = self._analyze_contrast(processed_image)
-        
+
         # 4. Análise de ruído (propriedade intelectual)
         dimension_scores['noise_level'] = self._analyze_noise(processed_image)
-        
-        # 5. Detecção de artifacts (algoritmo FADEX)
+
+        # 5. Detecção de artifacts (algoritmo WingsAI)
         dimension_scores['artifacts'] = self._detect_artifacts(processed_image)
         
         # 6. Adequação clínica (propriedade intelectual)
         dimension_scores['clinical_adequacy'] = self._assess_clinical_adequacy(
             processed_image, dimension_scores, exam_type
         )
-        
-        # Cálculo do score global (fórmula proprietária FADEX)
+
+        # Cálculo do score global (fórmula proprietária WingsAI)
         global_score = self._calculate_global_score(
             dimension_scores, exam_type
         )
-        
+
         # Cálculo de confidence (algoritmo proprietário)
         confidence = self._calculate_confidence(dimension_scores, processed_image)
-        
+
         # Classificação ML readiness (propriedade intelectual)
         ml_readiness = self._assess_ml_readiness(global_score, dimension_scores)
-        
-        # Classificação clínica (algoritmo FADEX)
+
+        # Classificação clínica (algoritmo WingsAI)
         clinical_adequacy = self._classify_clinical_adequacy(global_score, dimension_scores)
         
         # Geração de recomendações (sistema especialista propriedade)
         recommendations = self._generate_recommendations(dimension_scores, exam_type)
-        
-        return FadexScore(
+
+        return WingsAIScore(
             global_score=global_score,
             dimension_scores=dimension_scores,
             confidence=confidence,
@@ -189,7 +189,7 @@ class FadexQualityAnalyzer:
     
     def _analyze_sharpness(self, image: np.ndarray) -> float:
         """
-        Análise proprietária de nitidez FADEX
+        Análise proprietária de nitidez WingsAI
         Combina múltiplas métricas para avaliação robusta
         PROPRIEDADE INTELECTUAL
         """
@@ -198,14 +198,14 @@ class FadexQualityAnalyzer:
 
         # 1. Variance of Laplacian (método clássico)
         laplacian_var = cv2.Laplacian(image, cv2.CV_64F).var()
-        
-        # 2. Gradiente magnitude médio (FADEX method)
+
+        # 2. Gradiente magnitude médio (WingsAI method)
         grad_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
         grad_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
         gradient_magnitude = np.sqrt(grad_x**2 + grad_y**2)
         mean_gradient = np.mean(gradient_magnitude)
-        
-        # 3. High-frequency content analysis (propriedade FADEX)
+
+        # 3. High-frequency content analysis (propriedade WingsAI)
         f_transform = np.fft.fft2(image)
         f_shift = np.fft.fftshift(f_transform)
         magnitude_spectrum = np.abs(f_shift)
@@ -218,12 +218,12 @@ class FadexQualityAnalyzer:
         high_freq_mask = 1 - high_freq_mask
         
         high_freq_energy = np.mean(magnitude_spectrum * high_freq_mask)
-        
-        # 4. Edge density analysis (método FADEX)
+
+        # 4. Edge density analysis (método WingsAI)
         edges = cv2.Canny((image * 255).astype(np.uint8), 50, 150)
         edge_density = np.sum(edges > 0) / edges.size
-        
-        # Combinação proprietária FADEX (fórmula patenteável)
+
+        # Combinação proprietária WingsAI (fórmula patenteável)
         weights = [0.3, 0.25, 0.25, 0.2]
         normalized_metrics = [
             min(laplacian_var / 1000, 1.0),  # Normalização empírica
@@ -238,7 +238,7 @@ class FadexQualityAnalyzer:
     
     def _analyze_exposure(self, image: np.ndarray) -> float:
         """
-        Análise proprietária de exposição FADEX
+        Análise proprietária de exposição WingsAI
         Específica para imagens oftalmológicas
         ALGORITMO PROPRIETÁRIO
         """
@@ -253,8 +253,8 @@ class FadexQualityAnalyzer:
         underexposed_ratio = np.sum(image < 0.05) / image.size
         overexposed_ratio = np.sum(image > 0.95) / image.size
         clipping_penalty = (underexposed_ratio + overexposed_ratio) * 2
-        
-        # 3. Análise de distribuição tonal (método FADEX)
+
+        # 3. Análise de distribuição tonal (método WingsAI)
         mean_intensity = np.mean(image)
         std_intensity = np.std(image)
         
@@ -265,14 +265,14 @@ class FadexQualityAnalyzer:
         # Score baseado na proximidade do ideal
         mean_score = 1 - abs(mean_intensity - np.mean(ideal_mean_range)) / 0.5
         std_score = 1 - abs(std_intensity - np.mean(ideal_std_range)) / 0.3
-        
-        # 4. Análise de dinâmica tonal (propriedade FADEX)
+
+        # 4. Análise de dinâmica tonal (propriedade WingsAI)
         percentile_5 = np.percentile(image, 5)
         percentile_95 = np.percentile(image, 95)
         dynamic_range = percentile_95 - percentile_5
         dynamic_score = min(dynamic_range / 0.8, 1.0)  # Ideal > 0.8
-        
-        # Combinação proprietária (fórmula FADEX)
+
+        # Combinação proprietária (fórmula WingsAI)
         exposure_score = (
             0.4 * mean_score +
             0.3 * std_score +
@@ -284,7 +284,7 @@ class FadexQualityAnalyzer:
     
     def _analyze_contrast(self, image: np.ndarray) -> float:
         """
-        Análise proprietária de contraste FADEX
+        Análise proprietária de contraste WingsAI
         Otimizada para estruturas oftalmológicas
         """
         # Garante tipo correto
@@ -308,12 +308,12 @@ class FadexQualityAnalyzer:
             michelson_contrast = (np.mean(max_vals) - np.mean(min_vals)) / (np.mean(max_vals) + np.mean(min_vals) + 1e-8)
         else:
             michelson_contrast = 0
-        
-        # 3. Local contrast analysis (propriedade FADEX)
+
+        # 3. Local contrast analysis (propriedade WingsAI)
         # Análise de contraste local usando janelas deslizantes
         kernel_size = 32
         local_contrasts = []
-        
+
         h, w = image.shape
         for i in range(0, h-kernel_size, kernel_size//2):
             for j in range(0, w-kernel_size, kernel_size//2):
@@ -321,10 +321,10 @@ class FadexQualityAnalyzer:
                 if patch.size > 0:
                     local_std = np.std(patch)
                     local_contrasts.append(local_std)
-        
+
         mean_local_contrast = np.mean(local_contrasts) if local_contrasts else 0
-        
-        # 4. Edge-based contrast (método FADEX)
+
+        # 4. Edge-based contrast (método WingsAI)
         edges = cv2.Canny((image * 255).astype(np.uint8), 50, 150)
         edge_pixels = image[edges > 0]
         non_edge_pixels = image[edges == 0]
@@ -333,8 +333,8 @@ class FadexQualityAnalyzer:
             edge_contrast = abs(np.mean(edge_pixels) - np.mean(non_edge_pixels))
         else:
             edge_contrast = 0
-        
-        # Combinação proprietária FADEX
+
+        # Combinação proprietária WingsAI
         contrast_metrics = [
             min(rms_contrast / 0.3, 1.0),
             min(abs(michelson_contrast) / 0.5, 1.0),
@@ -349,7 +349,7 @@ class FadexQualityAnalyzer:
     
     def _analyze_noise(self, image: np.ndarray) -> float:
         """
-        Análise proprietária de ruído FADEX
+        Análise proprietária de ruído WingsAI
         Detecta múltiplos tipos de ruído em imagens médicas
         """
         # Garante tipo correto
@@ -369,8 +369,8 @@ class FadexQualityAnalyzer:
         # 3. Salt and pepper noise detection (específico para medicina)
         median_filtered = ndimage.median_filter(image, size=3)
         impulse_noise = np.mean(np.abs(image - median_filtered))
-        
-        # 4. Texture vs noise discrimination (propriedade FADEX)
+
+        # 4. Texture vs noise discrimination (propriedade WingsAI)
         # Usa análise de co-ocorrência para distinguir textura médica de ruído
         
         # Converte para análise de textura
@@ -406,7 +406,7 @@ class FadexQualityAnalyzer:
     
     def _detect_artifacts(self, image: np.ndarray) -> float:
         """
-        Detecção proprietária de artifacts FADEX
+        Detecção proprietária de artifacts WingsAI
         Específica para artifacts comuns em oftalmologia
         """
         # Garante tipo correto
@@ -479,13 +479,13 @@ class FadexQualityAnalyzer:
         return max(artifact_score, 0.0)
     
     def _assess_clinical_adequacy(
-        self, 
-        image: np.ndarray, 
+        self,
+        image: np.ndarray,
         dimension_scores: Dict[str, float],
         exam_type: str
     ) -> float:
         """
-        Avaliação proprietária de adequação clínica FADEX
+        Avaliação proprietária de adequação clínica WingsAI
         Baseada em guidelines oftalmológicos
         """
         # Pesos específicos por tipo de exame
@@ -511,8 +511,8 @@ class FadexQualityAnalyzer:
         # 3. Structure visibility (específico para oftalmologia)
         # Detecta presença de estruturas anatômicas relevantes
         structure_visibility = self._assess_structure_visibility(image, exam_type)
-        
-        # Combinação final (fórmula proprietária FADEX)
+
+        # Combinação final (fórmula proprietária WingsAI)
         clinical_factors = [base_score, resolution_adequacy * 100, 
                           dynamic_adequacy * 100, structure_visibility]
         clinical_weights = [0.6, 0.15, 0.15, 0.1]
@@ -524,7 +524,7 @@ class FadexQualityAnalyzer:
     def _assess_structure_visibility(self, image: np.ndarray, exam_type: str) -> float:
         """
         Avalia visibilidade de estruturas anatômicas específicas
-        PROPRIEDADE INTELECTUAL FADEX
+        PROPRIEDADE INTELECTUAL WingsAI
         """
         if exam_type == 'fundoscopy':
             # Para fundoscopia: detecta disco óptico, vasos, mácula
@@ -601,12 +601,12 @@ class FadexQualityAnalyzer:
         return structure_score
     
     def _calculate_global_score(
-        self, 
-        dimension_scores: Dict[str, float], 
+        self,
+        dimension_scores: Dict[str, float],
         exam_type: str
     ) -> float:
         """
-        Cálculo do score global proprietário FADEX
+        Cálculo do score global proprietário WingsAI
         FÓRMULA PATENTEÁVEL
         """
         # Pesos adaptativos baseados no tipo de exame
@@ -629,26 +629,26 @@ class FadexQualityAnalyzer:
         scores_list = list(dimension_scores.values())
         score_std = np.std(scores_list)
         consistency_bonus = max(0, (20 - score_std)) * 0.1
-        
-        # 3. Non-linear scaling para realçar diferenças (propriedade FADEX)
+
+        # 3. Non-linear scaling para realçar diferenças (propriedade WingsAI)
         # Função sigmoid adaptada para scoring médico
-        def fadex_sigmoid(x, midpoint=50, steepness=0.1):
+        def wingsai_sigmoid(x, midpoint=50, steepness=0.1):
             return 100 / (1 + np.exp(-steepness * (x - midpoint)))
-        
+
         # Aplica transformação não-linear
         intermediate_score = weighted_score - critical_penalty + consistency_bonus
-        final_score = fadex_sigmoid(intermediate_score)
+        final_score = wingsai_sigmoid(intermediate_score)
         
         # 4. Constraint final para garantir range 0-100
         return max(0.0, min(final_score, 100.0))
     
     def _calculate_confidence(
-        self, 
-        dimension_scores: Dict[str, float], 
+        self,
+        dimension_scores: Dict[str, float],
         image: np.ndarray
     ) -> float:
         """
-        Cálculo proprietário de confidence FADEX
+        Cálculo proprietário de confidence WingsAI
         Baseado em múltiplos fatores de incerteza
         """
         # 1. Consistência entre dimensões
@@ -665,31 +665,31 @@ class FadexQualityAnalyzer:
         # 4. Dynamic range factor
         dynamic_range = np.percentile(image, 95) - np.percentile(image, 5)
         dynamic_factor = min(dynamic_range / 0.8, 1.0)
-        
-        # Combinação proprietária (algoritmo FADEX)
+
+        # Combinação proprietária (algoritmo WingsAI)
         confidence_factors = [
             dimension_consistency,
-            image_quality_factor, 
+            image_quality_factor,
             resolution_factor,
             dynamic_factor
         ]
-        
+
         weights = [0.4, 0.3, 0.15, 0.15]
         confidence = sum(w * f for w, f in zip(weights, confidence_factors))
-        
-        # Aplicação de função de calibração (propriedade FADEX)
+
+        # Aplicação de função de calibração (propriedade WingsAI)
         calibrated_confidence = confidence ** 0.8  # Slight deflation for conservatism
         
         return min(calibrated_confidence * 100, 100.0)
     
     def _assess_ml_readiness(
-        self, 
-        global_score: float, 
+        self,
+        global_score: float,
         dimension_scores: Dict[str, float]
     ) -> str:
         """
         Classificação proprietária de adequação para ML
-        PROPRIEDADE INTELECTUAL FADEX
+        PROPRIEDADE INTELECTUAL WingsAI
         """
         # Thresholds específicos para ML (baseados em validação empírica)
         if global_score >= 85 and all(score >= 80 for score in dimension_scores.values()):
@@ -702,12 +702,12 @@ class FadexQualityAnalyzer:
             return "poor"      # Não recomendado para ML
     
     def _classify_clinical_adequacy(
-        self, 
-        global_score: float, 
+        self,
+        global_score: float,
         dimension_scores: Dict[str, float]
     ) -> str:
         """
-        Classificação clínica proprietária FADEX
+        Classificação clínica proprietária WingsAI
         Baseada em guidelines oftalmológicos
         """
         # Critérios específicos para diagnóstico oftalmológico
@@ -722,13 +722,13 @@ class FadexQualityAnalyzer:
             return "inadequate"   # Inadequado para uso clínico
     
     def _generate_recommendations(
-        self, 
-        dimension_scores: Dict[str, float], 
+        self,
+        dimension_scores: Dict[str, float],
         exam_type: str
     ) -> List[str]:
         """
         Geração de recomendações específicas
-        Sistema especialista proprietário FADEX
+        Sistema especialista proprietário WingsAI
         """
         recommendations = []
         
@@ -778,8 +778,8 @@ class FadexQualityAnalyzer:
         
         # Se não há problemas significativos
         if not recommendations:
-            recommendations.append("Imagem atende aos padrões de qualidade FADEX")
-        
+            recommendations.append("Imagem atende aos padrões de qualidade WingsAI")
+
         return recommendations
 
 
@@ -787,45 +787,45 @@ def analyze_image_quality(
     image: Union[np.ndarray, torch.Tensor],
     exam_type: str = 'fundoscopy',
     metadata: Optional[Dict] = None
-) -> FadexScore:
+) -> WingsAIScore:
     """
-    Função principal de análise de qualidade FADEX
+    Função principal de análise de qualidade WingsAI
     Interface simplificada para uso externo
-    
+
     Args:
         image: Imagem para análise
         exam_type: Tipo de exame ('fundoscopy', 'oct', 'angiography')
         metadata: Metadata adicional
-        
+
     Returns:
-        FadexScore com análise completa
+        WingsAIScore com análise completa
     """
-    analyzer = FadexQualityAnalyzer()
+    analyzer = WingsAIQualityAnalyzer()
     return analyzer.analyze_image(image, exam_type, metadata)
 
 
 if __name__ == "__main__":
     # Teste do sistema de scoring
     import matplotlib.pyplot as plt
-    
+
     # Cria imagem de teste
     test_image = np.random.rand(512, 512) * 0.8 + 0.1  # Simula imagem médica
-    
+
     # Adiciona algumas características
     # Disco óptico simulado
     center = (256, 200)
     y, x = np.ogrid[:512, :512]
     mask = (x - center[1])**2 + (y - center[0])**2 <= 30**2
     test_image[mask] = 0.9
-    
+
     # Vasos simulados
     test_image[250:260, 150:400] = 0.2
     test_image[200:350, 180:190] = 0.2
-    
+
     # Análise completa
     score = analyze_image_quality(test_image, exam_type='fundoscopy')
-    
-    print("=== FADEX QUALITY ANALYSIS ===")
+
+    print("=== WingsAI QUALITY ANALYSIS ===")
     print(f"Global Score: {score.global_score:.1f}/100")
     print(f"Confidence: {score.confidence:.1f}%")
     print(f"ML Readiness: {score.ml_readiness}")

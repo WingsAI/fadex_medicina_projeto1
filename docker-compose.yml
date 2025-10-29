@@ -4,7 +4,7 @@ services:
   # Backend API
   api:
     build: .
-    container_name: fadex-api
+    container_name: wingsai-api
     ports:
       - "8000:8000"
     volumes:
@@ -22,7 +22,7 @@ services:
   # Frontend Web
   frontend:
     image: nginx:alpine
-    container_name: fadex-frontend
+    container_name: wingsai-frontend
     ports:
       - "3000:80"
     volumes:
@@ -33,4 +33,4 @@ services:
 
 networks:
   default:
-    name: fadex-network
+    name: wingsai-network

@@ -37,7 +37,7 @@ scripts\start_backend.bat
 Você verá:
 ```
 Ativando ambiente virtual...
-✅ Módulo fadex_core importado com sucesso
+✅ Módulo wingsai_core importado com sucesso
 INFO:     Uvicorn running on http://0.0.0.0:8000
 ```
 
@@ -184,7 +184,7 @@ Deve retornar:
 {
   "status": "healthy",
   "timestamp": "...",
-  "service": "FADEX Quality Analysis"
+  "service": "WingsAI Quality Analysis"
 }
 ```
 

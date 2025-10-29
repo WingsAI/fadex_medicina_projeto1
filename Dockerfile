@@ -1,4 +1,4 @@
-# FADEX - Dockerfile para Backend API
+# WingsAI - Dockerfile para Backend API
 FROM python:3.9-slim
 
 # Set working directory

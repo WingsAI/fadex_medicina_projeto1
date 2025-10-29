@@ -1,5 +1,5 @@
 """
-FADEX - Backend API Principal
+WingsAI - Backend API Principal
 FastAPI REST API para análise de qualidade de imagens médicas
 """
 
@@ -28,16 +28,16 @@ if src_dir not in sys.path:
     logger.info(f"Adicionado ao path: {src_dir}")
 
 try:
-    from ml.scoring.fadex_core import analyze_image_quality
-    logger.info("✅ Módulo fadex_core importado com sucesso")
+    from ml.scoring.wingsai_core import analyze_image_quality
+    logger.info("✅ Módulo wingsai_core importado com sucesso")
 except Exception as e:
-    logger.error(f"❌ Erro ao importar fadex_core: {e}")
+    logger.error(f"❌ Erro ao importar wingsai_core: {e}")
     logger.error(f"   sys.path: {sys.path}")
     raise
 
 # Inicializa FastAPI
 app = FastAPI(
-    title="FADEX API",
+    title="WingsAI API",
     description="Sistema Nacional de Qualidade de Imagens Médicas - API REST",
     version="1.0.0",
     docs_url="/docs",
@@ -58,7 +58,7 @@ app.add_middleware(
 async def root():
     """Endpoint raiz - informações da API"""
     return {
-        "name": "FADEX API",
+        "name": "WingsAI API",
         "version": "1.0.0",
         "status": "operational",
         "docs": "/docs",
@@ -76,7 +76,7 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
-        "service": "FADEX Quality Analysis"
+        "service": "WingsAI Quality Analysis"
     }
 
 
@@ -143,8 +143,8 @@ async def analyze_image(
         if exam_date:
             metadata["exam_date"] = exam_date
 
-        # Executa análise FADEX
-        logger.info("🔬 Iniciando análise FADEX...")
+        # Executa análise WingsAI
+        logger.info("🔬 Iniciando análise WingsAI...")
         score = analyze_image_quality(image, exam_type=exam_type, metadata=metadata)
         logger.info(f"✅ Análise concluída! Score: {score.global_score:.1f}/100")
 
@@ -277,7 +277,7 @@ async def api_info():
     """Informações sobre a API e algoritmo"""
     return {
         "api_version": "1.0.0",
-        "algorithm": "FADEX Quality Scoring",
+        "algorithm": "WingsAI Quality Scoring",
         "supported_formats": ["PNG", "JPG", "JPEG"],
         "supported_exam_types": ["fundoscopy", "oct", "angiography"],
         "score_range": "0-100",
@@ -306,7 +306,7 @@ async def debug_test():
         # Cria imagem sintética pequena
         test_image = np.random.rand(128, 128, 3)
 
-        logger.info("📊 Testando algoritmo FADEX...")
+        logger.info("📊 Testando algoritmo WingsAI...")
         score = analyze_image_quality(test_image, exam_type='fundoscopy')
 
         logger.info(f"✅ Debug OK! Score: {score.global_score:.1f}")
@@ -322,7 +322,7 @@ async def debug_test():
             "system_info": {
                 "numpy_version": np.__version__,
                 "opencv_available": True,
-                "fadex_core_loaded": True
+                "wingsai_core_loaded": True
             }
         }
     except Exception as e:
@@ -342,7 +342,7 @@ async def debug_test():
 
 if __name__ == "__main__":
     print("="*60)
-    print("🏥 FADEX API - Sistema de Análise de Qualidade")
+    print("🏥 WingsAI API - Sistema de Análise de Qualidade")
     print("="*60)
     print("\n📊 Servidor iniciando...")
     print("📍 URL: http://localhost:8000")

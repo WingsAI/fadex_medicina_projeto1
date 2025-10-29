@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FADEX - Script de Teste Standalone
+WingsAI - Script de Teste Standalone
 Testa o algoritmo de scoring de qualidade sem necessidade de infraestrutura
 """
 
@@ -16,11 +16,11 @@ from typing import Optional
 # Adiciona src ao path (subindo um nível de scripts/ para raiz, depois entrando em src/)
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from ml.scoring.fadex_core import analyze_image_quality, FadexScore
+from ml.scoring.wingsai_core import analyze_image_quality, WingsAIScore
 
 
-class FadexTester:
-    """Classe para facilitar testes do sistema FADEX"""
+class WingsAITester:
+    """Classe para facilitar testes do sistema WingsAI"""
 
     def __init__(self, output_dir: str = "results"):
         self.output_dir = Path(output_dir)
@@ -46,7 +46,7 @@ class FadexTester:
         image_path: str,
         exam_type: str = 'fundoscopy',
         save_results: bool = True
-    ) -> Optional[FadexScore]:
+    ) -> Optional[WingsAIScore]:
         """Analisa uma única imagem"""
 
         print(f"\n{'='*60}")
@@ -68,8 +68,8 @@ class FadexTester:
             'timestamp': datetime.now().isoformat()
         }
 
-        # Análise FADEX
-        print("⚙️  Executando análise FADEX...")
+        # Análise WingsAI
+        print("⚙️  Executando análise WingsAI...")
         score = analyze_image_quality(image, exam_type, metadata)
 
         # Exibe resultados
@@ -112,10 +112,10 @@ class FadexTester:
         # Salva resumo do batch
         self._save_batch_summary(results)
 
-    def _print_results(self, score: FadexScore):
+    def _print_results(self, score: WingsAIScore):
         """Imprime resultados formatados"""
 
-        print(f"\n📊 RESULTADOS FADEX")
+        print(f"\n📊 RESULTADOS WingsAI")
         print(f"{'─'*60}")
 
         # Score global com indicador visual
@@ -155,7 +155,7 @@ class FadexTester:
         bar = "█" * filled + "░" * empty
         return f"{color} [{bar}]"
 
-    def _save_results(self, score: FadexScore, filename_base: str):
+    def _save_results(self, score: WingsAIScore, filename_base: str):
         """Salva resultados em JSON"""
 
         output_file = self.output_dir / f"{filename_base}_results.json"
@@ -217,11 +217,11 @@ def main():
     """Função principal para testes via CLI"""
 
     print("="*60)
-    print("🏥 FADEX - Sistema de Análise de Qualidade de Imagens")
+    print("🏥 WingsAI - Sistema de Análise de Qualidade de Imagens")
     print("="*60)
 
     # Inicializa tester
-    tester = FadexTester()
+    tester = WingsAITester()
 
     # Verifica argumentos
     if len(sys.argv) < 2:

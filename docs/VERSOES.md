@@ -5,23 +5,23 @@ Este projeto contém **três versões funcionais** que coexistem e podem ser usa
 ## 📊 Visão Geral das Versões
 
 ### 1️⃣ **Versão CLI (Linha de Comando)**
-**Localização**: `scripts/test_fadex.py`
+**Localização**: `scripts/test_wingsai.py`
 **Propósito**: Análise rápida de imagens via terminal
 **Uso**: Desenvolvimento, testes, automação
 
 ```bash
 # Executar análise
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 
 # Gerar relatórios
-python scripts/test_fadex.py examples/ --output results/
+python scripts/test_wingsai.py examples/ --output results/
 ```
 
 **Características**:
 - ✅ Análise batch de múltiplas imagens
 - ✅ Exportação JSON e relatórios
 - ✅ Ideal para scripts e automação
-- ✅ Usa algoritmo original FADEX
+- ✅ Usa algoritmo original WingsAI
 
 ---
 
@@ -54,7 +54,7 @@ open src/frontend/index.html
 - ✅ Interface web funcional
 - ✅ Upload e visualização de resultados
 - ✅ Fácil integração com outros sistemas
-- ✅ Usa algoritmo original FADEX
+- ✅ Usa algoritmo original WingsAI
 
 ---
 
@@ -90,12 +90,12 @@ npm start
 
 ---
 
-## 🔀 Nomenclatura: FADEX vs SNPQIM
+## 🔀 Nomenclatura: WingsAI vs SNPQIM
 
-### FADEX (Nome Original)
+### WingsAI (Nome Original)
 - **Arquivos mantidos**:
-  - `src/ml/scoring/fadex_core.py` - Algoritmo original
-  - `scripts/test_fadex.py` - CLI original
+  - `src/ml/scoring/wingsai_core.py` - Algoritmo original
+  - `scripts/test_wingsai.py` - CLI original
   - Referências em backend/frontend HTML
 
 ### SNPQIM (Novo Nome)
@@ -183,7 +183,7 @@ fadex_medicina_projeto1/
 │
 ├── 💻 src/                         # Backend Original
 │   ├── ml/scoring/
-│   │   ├── fadex_core.py          # ⭐ Algoritmo FADEX
+│   │   ├── wingsai_core.py        # ⭐ Algoritmo WingsAI
 │   │   └── snpqim_core.py         # ⭐ Algoritmo SNPQIM
 │   ├── backend/
 │   │   └── main.py                # ⭐ API FastAPI
@@ -210,8 +210,8 @@ fadex_medicina_projeto1/
 ### Para CLI/Backend
 ```bash
 # Trabalhe nos arquivos existentes
-edit src/ml/scoring/fadex_core.py
-edit scripts/test_fadex.py
+edit src/ml/scoring/wingsai_core.py
+edit scripts/test_wingsai.py
 ```
 
 ### Para Webapp

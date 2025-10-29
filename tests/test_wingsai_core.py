@@ -1,5 +1,5 @@
 """
-Testes Unitários para FADEX Core
+Testes Unitários para WingsAI Core
 Valida funcionamento do algoritmo de scoring
 """
 
@@ -11,21 +11,21 @@ import os
 # Adiciona src ao path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from ml.scoring.fadex_core import (
-    FadexQualityAnalyzer,
+from ml.scoring.wingsai_core import (
+    WingsAIQualityAnalyzer,
     analyze_image_quality,
-    FadexScore,
+    WingsAIScore,
     QualityDimension
 )
 
 
-class TestFadexQualityAnalyzer:
-    """Testes para a classe FadexQualityAnalyzer"""
+class TestWingsAIQualityAnalyzer:
+    """Testes para a classe WingsAIQualityAnalyzer"""
 
     @pytest.fixture
     def analyzer(self):
         """Fixture que cria um analyzer para testes"""
-        return FadexQualityAnalyzer()
+        return WingsAIQualityAnalyzer()
 
     @pytest.fixture
     def sample_image_high_quality(self):
@@ -67,7 +67,7 @@ class TestFadexQualityAnalyzer:
         """Testa análise de imagem de alta qualidade"""
         score = analyzer.analyze_image(sample_image_high_quality, exam_type='fundoscopy')
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
         assert 0 <= score.global_score <= 100
         assert score.global_score > 50  # Deve ter score razoável
         assert 0 <= score.confidence <= 100
@@ -80,7 +80,7 @@ class TestFadexQualityAnalyzer:
         """Testa análise de imagem de baixa qualidade"""
         score = analyzer.analyze_image(sample_image_low_quality, exam_type='fundoscopy')
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
         assert 0 <= score.global_score <= 100
         # Imagem de baixa qualidade deve ter score baixo
         assert score.global_score < 70
@@ -99,7 +99,7 @@ class TestFadexQualityAnalyzer:
 
         for exam_type in exam_types:
             score = analyzer.analyze_image(sample_image_high_quality, exam_type=exam_type)
-            assert isinstance(score, FadexScore)
+            assert isinstance(score, WingsAIScore)
             # Scores podem variar por tipo de exame devido a pesos diferentes
             assert 0 <= score.global_score <= 100
 
@@ -311,7 +311,7 @@ class TestAnalyzeImageQuality:
 
         score = analyze_image_quality(test_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
         assert score.global_score >= 0
         assert score.confidence >= 0
 
@@ -352,14 +352,14 @@ class TestEdgeCases:
 
     @pytest.fixture
     def analyzer(self):
-        return FadexQualityAnalyzer()
+        return WingsAIQualityAnalyzer()
 
     def test_empty_image(self, analyzer):
         """Testa com imagem vazia (todos zeros)"""
         empty_image = np.zeros((512, 512))
         score = analyzer.analyze_image(empty_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
         assert 0 <= score.global_score <= 100
 
     def test_saturated_image(self, analyzer):
@@ -367,7 +367,7 @@ class TestEdgeCases:
         saturated_image = np.ones((512, 512))
         score = analyzer.analyze_image(saturated_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
         # Deve detectar baixa qualidade
         assert score.global_score < 80
 
@@ -376,21 +376,21 @@ class TestEdgeCases:
         tiny_image = np.random.rand(64, 64)
         score = analyzer.analyze_image(tiny_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
 
     def test_very_large_image(self, analyzer):
         """Testa com imagem grande"""
         large_image = np.random.rand(2048, 2048)
         score = analyzer.analyze_image(large_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
 
     def test_rectangular_image(self, analyzer):
         """Testa com imagem retangular (não quadrada)"""
         rect_image = np.random.rand(512, 1024)
         score = analyzer.analyze_image(rect_image)
 
-        assert isinstance(score, FadexScore)
+        assert isinstance(score, WingsAIScore)
 
 
 if __name__ == "__main__":

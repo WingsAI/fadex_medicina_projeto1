@@ -45,7 +45,7 @@ python src\backend\main.py
 
 Você verá:
 ```
-✅ Módulo fadex_core importado com sucesso
+✅ Módulo wingsai_core importado com sucesso
 INFO:     Uvicorn running on http://0.0.0.0:8000
 ```
 
@@ -93,7 +93,7 @@ Abra: http://localhost:8000
 Deve mostrar:
 ```json
 {
-  "name": "FADEX API",
+  "name": "WingsAI API",
   "version": "1.0.0",
   "status": "operational"
 }
@@ -138,10 +138,10 @@ Você deve ver:
 python scripts/create_test_images.py
 
 # Analisar uma imagem
-python scripts/test_fadex.py examples/test_high_quality.jpg
+python scripts/test_wingsai.py examples/test_high_quality.jpg
 
 # Analisar pasta inteira
-python scripts/test_fadex.py examples/ --batch
+python scripts/test_wingsai.py examples/ --batch
 ```
 
 ### Via API (cURL):
@@ -234,7 +234,7 @@ pip install -r requirements-minimal.txt
 
 ```bash
 # Analisar 100 imagens de uma vez
-python scripts/test_fadex.py dataset/ --batch --output results.json
+python scripts/test_wingsai.py dataset/ --batch --output results.json
 
 # Ver resumo
 cat results.json
@@ -293,7 +293,7 @@ else:
                ▼
 ┌─────────────────────────────────────────────┐
 │  5. Clicar "Analisar Qualidade"             │
-│     WebApp → Backend API → fadex_core.py    │
+│     WebApp → Backend API → wingsai_core.py  │
 └──────────────┬──────────────────────────────┘
                │
                ▼
