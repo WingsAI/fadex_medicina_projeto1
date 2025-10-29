@@ -45,18 +45,18 @@ export default function Home() {
               {/* Stats Cards */}
               <div className="grid grid-cols-2 gap-4">
                 <StatsCard
-                  title="Quality Score"
+                  title={t.dashboard.qualityScore.title}
                   value={latestAnalysis ? latestAnalysis.result.global_score.toFixed(1) : "--"}
-                  subtitle={latestAnalysis ? "Latest analysis" : "No analysis yet"}
+                  subtitle={latestAnalysis ? t.dashboard.qualityScore.latestAnalysis : t.dashboard.qualityScore.noAnalysis}
                   icon={TrendingUp}
                   trend={latestAnalysis && latestAnalysis.result.global_score >= 70 ? "up" : undefined}
-                  trendValue={latestAnalysis ? `${latestAnalysis.result.confidence.toFixed(0)}% conf` : undefined}
+                  trendValue={latestAnalysis ? `${latestAnalysis.result.confidence.toFixed(0)}% ${t.dashboard.qualityScore.confidence}` : undefined}
                   color="purple"
                 />
                 <StatsCard
-                  title="ML Readiness"
+                  title={t.dashboard.mlReadiness.title}
                   value={latestAnalysis ? latestAnalysis.result.ml_readiness : "--"}
-                  subtitle={latestAnalysis ? latestAnalysis.result.clinical_adequacy : "Waiting for upload"}
+                  subtitle={latestAnalysis ? latestAnalysis.result.clinical_adequacy : t.dashboard.mlReadiness.waiting}
                   icon={FileCheck}
                   color="blue"
                 />
@@ -74,11 +74,11 @@ export default function Home() {
             {/* Additional Stats */}
             <div className="col-span-6">
               <div className="glass-effect rounded-2xl p-6 card-hover">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4">Quality Metrics</h3>
+                <h3 className="text-sm font-semibold text-slate-700 mb-4">{t.dashboard.qualityMetrics.title}</h3>
                 <div className="space-y-4">
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs text-slate-600 font-medium">Image Quality Score</span>
+                      <span className="text-xs text-slate-600 font-medium">{t.dashboard.qualityMetrics.imageQuality}</span>
                       <span className="text-sm font-bold text-purple-600">94%</span>
                     </div>
                     <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -87,7 +87,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs text-slate-600 font-medium">Adequacy Rate</span>
+                      <span className="text-xs text-slate-600 font-medium">{t.dashboard.qualityMetrics.adequacy}</span>
                       <span className="text-sm font-bold text-blue-600">87%</span>
                     </div>
                     <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -96,7 +96,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs text-slate-600 font-medium">Processing Efficiency</span>
+                      <span className="text-xs text-slate-600 font-medium">{t.dashboard.qualityMetrics.efficiency}</span>
                       <span className="text-sm font-bold text-green-600">98%</span>
                     </div>
                     <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -109,37 +109,37 @@ export default function Home() {
 
             <div className="col-span-6">
               <div className="glass-effect rounded-2xl p-6 card-hover">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4">Recent Activity</h3>
+                <h3 className="text-sm font-semibold text-slate-700 mb-4">{t.dashboard.recentActivity.title}</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
                       <Activity className="w-4 h-4 text-purple-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-700">New analysis completed</p>
-                      <p className="text-xs text-slate-500">Patient ID: 12847 - Quality Score: 96%</p>
+                      <p className="text-sm font-medium text-slate-700">{t.dashboard.recentActivity.newAnalysis}</p>
+                      <p className="text-xs text-slate-500">{t.dashboard.recentActivity.patientId}: 12847 - Quality Score: 96%</p>
                     </div>
-                    <span className="text-xs text-slate-400 flex-shrink-0">2m ago</span>
+                    <span className="text-xs text-slate-400 flex-shrink-0">2m {t.dashboard.recentActivity.ago}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
                       <FileCheck className="w-4 h-4 text-blue-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-700">Report generated</p>
-                      <p className="text-xs text-slate-500">Monthly quality assessment ready</p>
+                      <p className="text-sm font-medium text-slate-700">{t.dashboard.recentActivity.reportGenerated}</p>
+                      <p className="text-xs text-slate-500">{t.dashboard.recentActivity.monthlyAssessment}</p>
                     </div>
-                    <span className="text-xs text-slate-400 flex-shrink-0">15m ago</span>
+                    <span className="text-xs text-slate-400 flex-shrink-0">15m {t.dashboard.recentActivity.ago}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
                       <Users className="w-4 h-4 text-green-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-700">Team update</p>
-                      <p className="text-xs text-slate-500">3 new members joined your workspace</p>
+                      <p className="text-sm font-medium text-slate-700">{t.dashboard.recentActivity.teamUpdate}</p>
+                      <p className="text-xs text-slate-500">3 {t.dashboard.recentActivity.newMembers}</p>
                     </div>
-                    <span className="text-xs text-slate-400 flex-shrink-0">1h ago</span>
+                    <span className="text-xs text-slate-400 flex-shrink-0">1h {t.dashboard.recentActivity.ago}</span>
                   </div>
                 </div>
               </div>

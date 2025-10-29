@@ -2,15 +2,18 @@
 
 import React from 'react'
 import { Code, Terminal, FileJson, CheckCircle, AlertCircle } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function ApiInstructions() {
+  const { t } = useLanguage()
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="glass-effect rounded-2xl p-8">
-        <h2 className="text-3xl font-bold gradient-text mb-4">API WingsAI - Processamento em Lote</h2>
+        <h2 className="text-3xl font-bold gradient-text mb-4">{t.api.title}</h2>
         <p className="text-slate-600">
-          Use nossa API REST para processar múltiplas imagens médicas e obter análises de qualidade em lote.
+          {t.api.subtitle}
         </p>
       </div>
 
@@ -18,17 +21,17 @@ export default function ApiInstructions() {
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <Terminal className="w-5 h-5 text-purple-600" />
-          Início Rápido
+          {t.api.quickStart.title}
         </h3>
         <div className="space-y-4">
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">1. Endpoint Base:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">1. {t.api.quickStart.baseEndpoint}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400">
               http://localhost:8000
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">2. Verificar Status da API:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">2. {t.api.quickStart.checkStatus}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400">
               curl http://localhost:8000/health
             </div>
@@ -40,17 +43,17 @@ export default function ApiInstructions() {
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <Code className="w-5 h-5 text-blue-600" />
-          Análise de Imagem Única
+          {t.api.singleImage.title}
         </h3>
         <div className="space-y-4">
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">Endpoint:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">{t.api.singleImage.endpoint}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400">
               POST /analyze
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">Exemplo com cURL:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">{t.api.singleImage.exampleCurl}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400 overflow-x-auto">
               {`curl -X POST "http://localhost:8000/analyze" \\
   -H "Content-Type: multipart/form-data" \\
@@ -58,7 +61,7 @@ export default function ApiInstructions() {
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">Exemplo com Python:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">{t.api.singleImage.examplePython}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400 overflow-x-auto">
               {`import requests
 
@@ -76,16 +79,16 @@ print(f"Quality Score: {result['result']['global_score']}")`}
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <FileJson className="w-5 h-5 text-purple-600" />
-          Processamento em Lote
+          {t.api.batch.title}
         </h3>
         <div className="space-y-4">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
-              <strong>Dica:</strong> Para processar múltiplas imagens, execute requisições em paralelo usando threading ou async/await.
+              <strong>{t.api.batch.tip}</strong> {t.api.batch.tipText}
             </p>
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-700 mb-2">Exemplo Python com Threading:</p>
+            <p className="text-sm font-semibold text-slate-700 mb-2">{t.api.batch.examplePython}</p>
             <div className="bg-slate-900 rounded-lg p-4 font-mono text-xs text-green-400 overflow-x-auto">
               {`import requests
 from concurrent.futures import ThreadPoolExecutor
@@ -118,7 +121,7 @@ for img, result in zip(images, results):
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <FileJson className="w-5 h-5 text-green-600" />
-          Formato de Resposta
+          {t.api.response.title}
         </h3>
         <div className="bg-slate-900 rounded-lg p-4 font-mono text-xs text-green-400 overflow-x-auto">
           {`{
@@ -148,7 +151,7 @@ for img, result in zip(images, results):
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-green-600" />
-          Boas Práticas
+          {t.api.bestPractices.title}
         </h3>
         <div className="space-y-3">
           <div className="flex items-start gap-3">
@@ -156,8 +159,8 @@ for img, result in zip(images, results):
               <CheckCircle className="w-4 h-4 text-green-600" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-slate-700">Limite de Concorrência</p>
-              <p className="text-xs text-slate-600">Use no máximo 5-10 threads simultâneas para não sobrecarregar o servidor.</p>
+              <p className="text-sm font-semibold text-slate-700">{t.api.bestPractices.concurrency.title}</p>
+              <p className="text-xs text-slate-600">{t.api.bestPractices.concurrency.description}</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -165,8 +168,8 @@ for img, result in zip(images, results):
               <CheckCircle className="w-4 h-4 text-green-600" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-slate-700">Tratamento de Erros</p>
-              <p className="text-xs text-slate-600">Sempre implemente try/except para capturar erros de rede ou processamento.</p>
+              <p className="text-sm font-semibold text-slate-700">{t.api.bestPractices.errorHandling.title}</p>
+              <p className="text-xs text-slate-600">{t.api.bestPractices.errorHandling.description}</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -174,8 +177,8 @@ for img, result in zip(images, results):
               <CheckCircle className="w-4 h-4 text-green-600" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-slate-700">Formatos Suportados</p>
-              <p className="text-xs text-slate-600">JPEG, PNG, DICOM (.dcm) - até 10MB por imagem.</p>
+              <p className="text-sm font-semibold text-slate-700">{t.api.bestPractices.formats.title}</p>
+              <p className="text-xs text-slate-600">{t.api.bestPractices.formats.description}</p>
             </div>
           </div>
         </div>
@@ -185,22 +188,22 @@ for img, result in zip(images, results):
       <div className="glass-effect rounded-2xl p-6">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
           <AlertCircle className="w-5 h-5 text-orange-600" />
-          Limitações
+          {t.api.limitations.title}
         </h3>
         <div className="space-y-2">
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
             <p className="text-sm text-orange-800">
-              <strong>Tamanho máximo:</strong> 10MB por imagem
+              <strong>{t.api.limitations.maxSize.split(':')[0]}:</strong> {t.api.limitations.maxSize.split(':')[1]}
             </p>
           </div>
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
             <p className="text-sm text-orange-800">
-              <strong>Rate limiting:</strong> Recomendado não exceder 100 requisições por minuto
+              <strong>{t.api.limitations.rateLimit.split(':')[0]}:</strong> {t.api.limitations.rateLimit.split(':')[1]}
             </p>
           </div>
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
             <p className="text-sm text-orange-800">
-              <strong>Timeout:</strong> Cada requisição tem timeout de 30 segundos
+              <strong>{t.api.limitations.timeout.split(':')[0]}:</strong> {t.api.limitations.timeout.split(':')[1]}
             </p>
           </div>
         </div>

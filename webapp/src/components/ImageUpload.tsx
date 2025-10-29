@@ -3,12 +3,14 @@
 import React, { useState, useCallback } from 'react'
 import { Upload, X, FileImage, Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 import { analyzeImage, AnalysisResult } from '@/services/api'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ImageUploadProps {
   onAnalysisComplete?: (result: AnalysisResult) => void
 }
 
 export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
+  const { t } = useLanguage()
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [analyzing, setAnalyzing] = useState(false)
@@ -105,7 +107,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
 
   return (
     <div className="glass-effect rounded-2xl p-6 card-hover">
-      <h3 className="text-lg font-bold text-slate-800 mb-4">Análise de Qualidade</h3>
+      <h3 className="text-lg font-bold text-slate-800 mb-4">{t.imageUpload.title}</h3>
 
       {/* Upload Area */}
       {!preview && (
@@ -131,9 +133,9 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
           <label htmlFor="file-upload" className="cursor-pointer">
             <Upload className="w-12 h-12 mx-auto text-slate-400 mb-4" />
             <p className="text-slate-700 font-medium mb-2">
-              Arraste uma imagem ou clique para selecionar
+              {t.imageUpload.dragDrop}
             </p>
-            <p className="text-sm text-slate-500">PNG, JPG - Máximo 10MB</p>
+            <p className="text-sm text-slate-500">{t.imageUpload.supportedFormats} - {t.imageUpload.maxSize}</p>
           </label>
         </div>
       )}
@@ -166,7 +168,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
               disabled={analyzing}
               className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg"
             >
-              Analisar Qualidade
+              {t.imageUpload.title}
             </button>
           )}
 
@@ -174,7 +176,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
           {analyzing && (
             <div className="flex items-center justify-center gap-3 py-3">
               <Loader2 className="w-5 h-5 animate-spin text-purple-600" />
-              <span className="text-slate-600 font-medium">Analisando imagem...</span>
+              <span className="text-slate-600 font-medium">{t.imageUpload.analyzing}</span>
             </div>
           )}
 
@@ -183,7 +185,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-red-800 font-medium">Erro na análise</p>
+                <p className="text-red-800 font-medium">{t.imageUpload.error}</p>
                 <p className="text-red-600 text-sm mt-1">{error}</p>
               </div>
             </div>
@@ -196,7 +198,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
               <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-2">
                   <CheckCircle className="w-6 h-6 text-green-600" />
-                  <span className="text-sm font-semibold text-slate-600">SCORE GLOBAL</span>
+                  <span className="text-sm font-semibold text-slate-600">{t.imageUpload.results.globalScore.toUpperCase()}</span>
                 </div>
                 <div className={`text-5xl font-bold ${getScoreColor(result.result.global_score)}`}>
                   {result.result.global_score.toFixed(1)}
@@ -204,7 +206,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
                 </div>
                 <div className="mt-3 flex gap-4 text-sm">
                   <div>
-                    <span className="text-slate-500">Confiança: </span>
+                    <span className="text-slate-500">{t.imageUpload.results.confidence}: </span>
                     <span className="font-semibold text-slate-700">
                       {(result.result.confidence * 100).toFixed(0)}%
                     </span>
@@ -220,7 +222,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
 
               {/* Dimensões */}
               <div className="space-y-2">
-                <h4 className="text-sm font-semibold text-slate-700">Análise por Dimensão</h4>
+                <h4 className="text-sm font-semibold text-slate-700">{t.imageUpload.results.title}</h4>
                 {Object.entries(result.result.dimension_scores).map(([key, value]) => (
                   <div key={key} className="flex items-center justify-between">
                     <span className="text-sm text-slate-600 capitalize">
@@ -244,7 +246,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
               {/* Recomendações */}
               {result.result.recommendations.length > 0 && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 mb-2">Recomendações</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 mb-2">{t.imageUpload.results.recommendations}</h4>
                   <ul className="space-y-1">
                     {result.result.recommendations.map((rec, index) => (
                       <li key={index} className="text-sm text-slate-600 flex items-start gap-2">
@@ -261,7 +263,7 @@ export default function ImageUpload({ onAnalysisComplete }: ImageUploadProps) {
                 onClick={handleClear}
                 className="w-full bg-white border-2 border-slate-300 text-slate-700 py-2 rounded-xl font-semibold hover:bg-slate-50 transition-all"
               >
-                Analisar Outra Imagem
+                {t.imageUpload.selectFile}
               </button>
             </div>
           )}
