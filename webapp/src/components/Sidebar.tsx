@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { Home, BarChart3, LineChart, Calendar, MessageSquare, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -34,13 +35,14 @@ const NavItem = ({ icon, label, active, badge, onClick }: NavItemProps) => (
 
 export default function Sidebar() {
   const [activeItem, setActiveItem] = useState('analytics')
+  const { t } = useLanguage()
 
   return (
     <aside className="w-64 h-full bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 pb-8 flex flex-col overflow-y-auto">
       {/* Logo */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold gradient-text">WingsAI</h1>
-        <p className="text-xs text-slate-500 mt-1">SNPQIM Medical Platform</p>
+        <h1 className="text-2xl font-bold gradient-text">{t.sidebar.title}</h1>
+        <p className="text-xs text-slate-500 mt-1">{t.sidebar.subtitle}</p>
       </div>
 
       {/* Search */}
@@ -91,7 +93,7 @@ export default function Sidebar() {
       {/* Connected Profiles */}
       <div className="mb-6 shrink-0">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Connected Profiles</span>
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{t.sidebar.connectedProfiles}</span>
           <button className="bg-black text-white text-xs px-3 py-1 rounded-full hover:bg-slate-800 transition-colors">
             Add another
           </button>
@@ -106,12 +108,12 @@ export default function Sidebar() {
       {/* AI-Powered Analytics */}
       <div className="bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl p-4 text-white shrink-0">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold uppercase tracking-wide opacity-90">AI-Powered</span>
+          <span className="text-xs font-semibold uppercase tracking-wide opacity-90">{t.sidebar.aiAnalytics.title}</span>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>
-        <h3 className="font-bold mb-3">Analytics</h3>
+        <h3 className="font-bold mb-3">{t.sidebar.menu.analytics}</h3>
         <div className="space-y-2">
           <button className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2">
             <Beaker className="w-4 h-4" />

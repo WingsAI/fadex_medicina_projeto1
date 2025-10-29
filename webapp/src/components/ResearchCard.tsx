@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Calendar, ChevronDown, ArrowRight } from 'lucide-react'
 
 interface ResearchItemProps {
@@ -21,6 +21,25 @@ const ResearchItem = ({ title, icon, onClick }: ResearchItemProps) => (
 )
 
 export default function ResearchCard() {
+  const [currentWeek, setCurrentWeek] = useState('')
+
+  useEffect(() => {
+    const now = new Date()
+    const dayOfWeek = now.getDay()
+    const startOfWeek = new Date(now)
+    startOfWeek.setDate(now.getDate() - dayOfWeek)
+    const endOfWeek = new Date(startOfWeek)
+    endOfWeek.setDate(startOfWeek.getDate() + 6)
+
+    const formatDate = (date: Date) => {
+      const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+      return `${months[date.getMonth()]} ${date.getDate()}`
+    }
+
+    setCurrentWeek(`${formatDate(startOfWeek)}-${formatDate(endOfWeek)}, ${now.getFullYear()}`)
+  }, [])
+
   return (
     <div className="glass-effect rounded-2xl p-6 card-hover">
       <div className="flex items-center justify-between mb-6">
@@ -28,7 +47,7 @@ export default function ResearchCard() {
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-purple-600 transition-colors">
             <Calendar className="w-4 h-4" />
-            <span>September 11-17, 2023</span>
+            <span>{currentWeek || 'Carregando...'}</span>
             <ChevronDown className="w-4 h-4" />
           </button>
           <button className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium flex items-center gap-1">
