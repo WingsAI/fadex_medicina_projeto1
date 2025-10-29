@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FADEX - Script de Teste da API
+WingsAI - Script de Teste da API
 Testa endpoints da API REST
 """
 
@@ -11,7 +11,7 @@ import sys
 
 
 class FadexAPITester:
-    """Testa API FADEX"""
+    """Testa API WingsAI"""
 
     def __init__(self, base_url: str = "http://localhost:8000"):
         self.base_url = base_url
@@ -174,7 +174,7 @@ def main():
     """Função principal"""
 
     print("="*60)
-    print("🧪 FADEX API - Testes Automatizados")
+    print("🧪 WingsAI API - Testes Automatizados")
     print("="*60)
 
     # Inicializa tester

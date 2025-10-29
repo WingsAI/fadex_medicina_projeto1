@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FADEX - Script de Teste Rápido da API
+WingsAI - Script de Teste Rápido da API
 Diagnostica problemas na API sem precisar do frontend
 """
 
@@ -9,12 +9,12 @@ import sys
 
 
 def test_api():
-    """Testa API FADEX rapidamente"""
+    """Testa API WingsAI rapidamente"""
 
     base_url = "http://localhost:8000"
 
     print("="*60)
-    print("🧪 FADEX API - Teste Rápido de Diagnóstico")
+    print("🧪 WingsAI API - Teste Rápido de Diagnóstico")
     print("="*60)
     print()
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# FADEX - Script de Inicialização Rápida
+# WingsAI - Script de Inicialização Rápida
 # Execute: ./start.sh
 
 echo "======================================"
-echo "🏥 FADEX - Sistema de Análise de Qualidade"
+echo "🏥 WingsAI - Sistema de Análise de Qualidade"
 echo "======================================"
 echo ""
 
@@ -54,7 +54,7 @@ case $option in
         # Execute análise
         echo ""
         echo "Executando análise em batch..."
-        python scripts/test_fadex.py examples/ --batch
+        python scripts/test_wingsai.py examples/ --batch
 
         echo ""
         echo "✅ Análise concluída!"

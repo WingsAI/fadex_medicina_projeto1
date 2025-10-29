@@ -226,11 +226,11 @@ def main():
     # Verifica argumentos
     if len(sys.argv) < 2:
         print("\n📝 Uso:")
-        print("  python scripts/test_fadex.py <imagem>              # Analisa uma imagem")
-        print("  python scripts/test_fadex.py <diretório> --batch   # Analisa múltiplas imagens")
+        print("  python scripts/test_wingsai.py <imagem>              # Analisa uma imagem")
+        print("  python scripts/test_wingsai.py <diretório> --batch   # Analisa múltiplas imagens")
         print("\nExemplos:")
-        print("  python scripts/test_fadex.py examples/fundus_01.png")
-        print("  python scripts/test_fadex.py examples/ --batch")
+        print("  python scripts/test_wingsai.py examples/fundus_01.png")
+        print("  python scripts/test_wingsai.py examples/ --batch")
 
         # Se não há argumentos, tenta usar imagens de exemplo
         examples_dir = Path("examples")
