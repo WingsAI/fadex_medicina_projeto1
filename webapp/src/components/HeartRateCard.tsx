@@ -1,9 +1,13 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
-import { Activity, MoreHorizontal } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Activity, Zap, Layers } from 'lucide-react'
+import PreProcessingModal from './PreProcessingModal'
+import SegmentationModal from './SegmentationModal'
 
 export default function HeartRateCard() {
+  const [isPreProcessingOpen, setIsPreProcessingOpen] = useState(false)
+  const [isSegmentationOpen, setIsSegmentationOpen] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -96,39 +100,65 @@ export default function HeartRateCard() {
   }, [])
 
   return (
-    <div className="glass-effect rounded-2xl p-6 card-hover">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Activity className="w-5 h-5 text-purple-600" />
-            <h3 className="text-sm font-semibold text-slate-700">Heartrate</h3>
+    <>
+      <PreProcessingModal
+        isOpen={isPreProcessingOpen}
+        onClose={() => setIsPreProcessingOpen(false)}
+      />
+      <SegmentationModal
+        isOpen={isSegmentationOpen}
+        onClose={() => setIsSegmentationOpen(false)}
+      />
+
+      <div className="glass-effect rounded-2xl p-6 card-hover">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Activity className="w-5 h-5 text-purple-600" />
+              <h3 className="text-sm font-semibold text-slate-700">Ferramentas IA</h3>
+            </div>
+            <p className="text-xs text-slate-500">Processamento avançado</p>
           </div>
-          <p className="text-xs text-slate-500">Average rate</p>
         </div>
-        <button className="text-slate-400 hover:text-slate-600 transition-colors">
-          <MoreHorizontal className="w-5 h-5" />
-        </button>
-      </div>
 
-      <div className="mb-4">
-        <div className="text-4xl font-bold text-slate-800">
-          92
-          <span className="text-lg text-slate-500 ml-2">bpm</span>
+        <div className="space-y-3 mb-4">
+          <button
+            onClick={() => setIsPreProcessingOpen(true)}
+            className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white rounded-xl px-4 py-3 text-left transition-all shadow-lg hover:shadow-xl flex items-center gap-3 group"
+          >
+            <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <Zap className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <div className="text-sm font-semibold">Pré-processamento</div>
+              <div className="text-xs opacity-80">Otimização automática</div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setIsSegmentationOpen(true)}
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl px-4 py-3 text-left transition-all shadow-lg hover:shadow-xl flex items-center gap-3 group"
+          >
+            <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <Layers className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <div className="text-sm font-semibold">Segmentação</div>
+              <div className="text-xs opacity-80">Detecção de estruturas</div>
+            </div>
+          </button>
         </div>
-        <p className="text-xs text-slate-500 mt-1">
-          The cause of heart palpitations is hereditary tachycardia.
-        </p>
-      </div>
 
-      <div className="relative h-24 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl overflow-hidden">
-        <canvas ref={canvasRef} className="w-full h-full" />
+        <div className="relative h-24 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl overflow-hidden">
+          <canvas ref={canvasRef} className="w-full h-full" />
 
-        {/* Peak indicator */}
-        <div className="absolute top-2 right-2 flex items-center gap-1">
-          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-          <span className="text-xs font-semibold text-purple-600">Peak</span>
+          {/* Peak indicator */}
+          <div className="absolute top-2 right-2 flex items-center gap-1">
+            <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+            <span className="text-xs font-semibold text-purple-600">IA Ativa</span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

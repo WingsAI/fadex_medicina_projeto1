@@ -1,11 +1,16 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Home, BarChart3, LineChart, Brain, Bell, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
+import { Home, BarChart3, LineChart, Brain, Bell, Search, TrendingUp, Eye, User, Users as UsersIcon, MessageSquare } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import NeuralNetworksModal from './NeuralNetworksModal'
 import AnalyticsModal from './AnalyticsModal'
 import AlertsModal from './AlertsModal'
+import TrendsModal from './TrendsModal'
+import PathologyDetectionModal from './PathologyDetectionModal'
+import PatientRecordsModal from './PatientRecordsModal'
+import SecondOpinionModal from './SecondOpinionModal'
+import TeamManagementModal from './TeamManagementModal'
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -41,6 +46,11 @@ export default function Sidebar() {
   const [isNeuralNetworksModalOpen, setIsNeuralNetworksModalOpen] = useState(false)
   const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false)
   const [isAlertsModalOpen, setIsAlertsModalOpen] = useState(false)
+  const [isTrendsModalOpen, setIsTrendsModalOpen] = useState(false)
+  const [isPathologyModalOpen, setIsPathologyModalOpen] = useState(false)
+  const [isPatientRecordsModalOpen, setIsPatientRecordsModalOpen] = useState(false)
+  const [isSecondOpinionModalOpen, setIsSecondOpinionModalOpen] = useState(false)
+  const [isTeamManagementModalOpen, setIsTeamManagementModalOpen] = useState(false)
   const { t } = useLanguage()
 
   return (
@@ -56,6 +66,26 @@ export default function Sidebar() {
       <AlertsModal
         isOpen={isAlertsModalOpen}
         onClose={() => setIsAlertsModalOpen(false)}
+      />
+      <TrendsModal
+        isOpen={isTrendsModalOpen}
+        onClose={() => setIsTrendsModalOpen(false)}
+      />
+      <PathologyDetectionModal
+        isOpen={isPathologyModalOpen}
+        onClose={() => setIsPathologyModalOpen(false)}
+      />
+      <PatientRecordsModal
+        isOpen={isPatientRecordsModalOpen}
+        onClose={() => setIsPatientRecordsModalOpen(false)}
+      />
+      <SecondOpinionModal
+        isOpen={isSecondOpinionModalOpen}
+        onClose={() => setIsSecondOpinionModalOpen(false)}
+      />
+      <TeamManagementModal
+        isOpen={isTeamManagementModalOpen}
+        onClose={() => setIsTeamManagementModalOpen(false)}
       />
       <aside className="w-64 h-full bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 pb-8 flex flex-col overflow-y-auto">
       {/* Logo */}
@@ -143,19 +173,40 @@ export default function Sidebar() {
         </div>
         <h3 className="font-bold mb-3">{t.sidebar.menu.analytics}</h3>
         <div className="space-y-2">
-          <button className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2">
-            <Beaker className="w-4 h-4" />
-            Spectroscope
-            <span className="text-xs ml-auto opacity-70">Quality Study</span>
+          <button
+            onClick={() => setIsTrendsModalOpen(true)}
+            className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <TrendingUp className="w-4 h-4" />
+            Tendências
           </button>
-          <button className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2">
-            <Dna className="w-4 h-4" />
-            DNA Profile
-            <span className="text-xs ml-auto opacity-70">In progress</span>
+          <button
+            onClick={() => setIsPathologyModalOpen(true)}
+            className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <Eye className="w-4 h-4" />
+            Patologias
           </button>
-          <button className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2">
-            <ScanSearch className="w-4 h-4" />
-            Genetic Scanner
+          <button
+            onClick={() => setIsPatientRecordsModalOpen(true)}
+            className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <User className="w-4 h-4" />
+            Prontuários
+          </button>
+          <button
+            onClick={() => setIsSecondOpinionModalOpen(true)}
+            className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <MessageSquare className="w-4 h-4" />
+            2ª Opinião
+          </button>
+          <button
+            onClick={() => setIsTeamManagementModalOpen(true)}
+            className="w-full bg-white/10 hover:bg-white/20 rounded-xl px-3 py-2 text-left text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <UsersIcon className="w-4 h-4" />
+            Equipes
           </button>
         </div>
       </div>
