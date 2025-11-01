@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Home, BarChart3, LineChart, Brain, MessageSquare, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
+import { Home, BarChart3, LineChart, Brain, Bell, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import NeuralNetworksModal from './NeuralNetworksModal'
 import AnalyticsModal from './AnalyticsModal'
+import AlertsModal from './AlertsModal'
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -39,6 +40,7 @@ export default function Sidebar() {
   const [activeItem, setActiveItem] = useState('analytics')
   const [isNeuralNetworksModalOpen, setIsNeuralNetworksModalOpen] = useState(false)
   const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false)
+  const [isAlertsModalOpen, setIsAlertsModalOpen] = useState(false)
   const { t } = useLanguage()
 
   return (
@@ -50,6 +52,10 @@ export default function Sidebar() {
       <AnalyticsModal
         isOpen={isAnalyticsModalOpen}
         onClose={() => setIsAnalyticsModalOpen(false)}
+      />
+      <AlertsModal
+        isOpen={isAlertsModalOpen}
+        onClose={() => setIsAlertsModalOpen(false)}
       />
       <aside className="w-64 h-full bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 pb-8 flex flex-col overflow-y-auto">
       {/* Logo */}
@@ -72,19 +78,19 @@ export default function Sidebar() {
       <nav className="space-y-2 flex-1 overflow-y-visible">
         <NavItem
           icon={<Home />}
-          label="Homepage"
+          label={t.sidebar.menu.homepage}
           active={activeItem === 'homepage'}
           onClick={() => setActiveItem('homepage')}
         />
         <NavItem
           icon={<BarChart3 />}
-          label="Statistics"
+          label={t.sidebar.menu.statistics}
           active={activeItem === 'statistics'}
           onClick={() => setActiveItem('statistics')}
         />
         <NavItem
           icon={<LineChart />}
-          label="Analytics"
+          label={t.sidebar.menu.analytics}
           active={activeItem === 'analytics'}
           onClick={() => {
             setActiveItem('analytics')
@@ -93,7 +99,7 @@ export default function Sidebar() {
         />
         <NavItem
           icon={<Brain />}
-          label="Neural Networks"
+          label={t.sidebar.menu.neuralNetworks}
           active={activeItem === 'neural-networks'}
           onClick={() => {
             setActiveItem('neural-networks')
@@ -101,11 +107,14 @@ export default function Sidebar() {
           }}
         />
         <NavItem
-          icon={<MessageSquare />}
-          label="Messages"
-          badge={2}
-          active={activeItem === 'messages'}
-          onClick={() => setActiveItem('messages')}
+          icon={<Bell />}
+          label={t.sidebar.menu.alerts}
+          badge={3}
+          active={activeItem === 'alerts'}
+          onClick={() => {
+            setActiveItem('alerts')
+            setIsAlertsModalOpen(true)
+          }}
         />
       </nav>
 

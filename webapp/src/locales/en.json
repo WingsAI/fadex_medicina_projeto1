@@ -4,7 +4,7 @@
     "api": "API",
     "swagger": "Swagger",
     "profile": {
-      "name": "Beatrice Howard",
+      "name": "João Victor",
       "department": "Oncology"
     }
   },
@@ -12,7 +12,11 @@
     "title": "WingsAI",
     "subtitle": "SNPQIM Medical Platform",
     "menu": {
+      "homepage": "Homepage",
+      "statistics": "Statistics",
       "analytics": "Analytics",
+      "neuralNetworks": "Neural Networks",
+      "alerts": "Alerts",
       "patients": "Patients",
       "reports": "Reports",
       "settings": "Settings"

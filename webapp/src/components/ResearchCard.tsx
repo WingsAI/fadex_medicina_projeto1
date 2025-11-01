@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Calendar, ChevronDown, ArrowRight } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ResearchItemProps {
   title: string
@@ -22,6 +23,7 @@ const ResearchItem = ({ title, icon, onClick }: ResearchItemProps) => (
 
 export default function ResearchCard() {
   const [currentWeek, setCurrentWeek] = useState('')
+  const { t, language } = useLanguage()
 
   useEffect(() => {
     const now = new Date()
@@ -32,18 +34,21 @@ export default function ResearchCard() {
     endOfWeek.setDate(startOfWeek.getDate() + 6)
 
     const formatDate = (date: Date) => {
-      const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+      const monthsPt = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+      const monthsEn = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December']
+      const months = language === 'pt-BR' ? monthsPt : monthsEn
       return `${months[date.getMonth()]} ${date.getDate()}`
     }
 
     setCurrentWeek(`${formatDate(startOfWeek)}-${formatDate(endOfWeek)}, ${now.getFullYear()}`)
-  }, [])
+  }, [language])
 
   return (
     <div className="glass-effect rounded-2xl p-6 card-hover">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-bold text-slate-800">Researches</h3>
+        <h3 className="text-lg font-bold text-slate-800">{t.research.title}</h3>
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-purple-600 transition-colors">
             <Calendar className="w-4 h-4" />
@@ -51,7 +56,7 @@ export default function ResearchCard() {
             <ChevronDown className="w-4 h-4" />
           </button>
           <button className="text-slate-400 hover:text-slate-600 transition-colors text-sm font-medium flex items-center gap-1">
-            Week
+            {t.research.week}
             <ChevronDown className="w-4 h-4" />
           </button>
         </div>
@@ -63,13 +68,13 @@ export default function ResearchCard() {
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-blue-500 rounded-full"></div>
           <div className="pl-6">
             <div className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
-              Today
+              {t.research.today}
             </div>
           </div>
         </div>
 
         <ResearchItem
-          title="Calculating the risk of diseases"
+          title={t.research.items.calculating}
           icon="🧬"
         />
 
@@ -79,12 +84,12 @@ export default function ResearchCard() {
 
           <div className="space-y-3 pt-6">
             <div className="bg-white/60 rounded-xl px-4 py-3 border border-slate-200 flex items-center justify-between group hover:border-purple-300 transition-all cursor-pointer">
-              <span className="text-sm text-slate-600 font-medium">Diagnosis of genetic diseases</span>
+              <span className="text-sm text-slate-600 font-medium">{t.research.items.diagnosis}</span>
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
             </div>
 
             <div className="bg-white/60 rounded-xl px-4 py-3 border border-slate-200 flex items-center justify-between group hover:border-purple-300 transition-all cursor-pointer">
-              <span className="text-sm text-slate-600 font-medium">Patterns in heredity</span>
+              <span className="text-sm text-slate-600 font-medium">{t.research.items.patterns}</span>
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
             </div>
           </div>
@@ -93,7 +98,7 @@ export default function ResearchCard() {
 
       <div className="mt-6 pt-6 border-t border-slate-200">
         <button className="text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors flex items-center gap-2">
-          View all researches
+          {t.research.viewAll}
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
