@@ -1,8 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Home, BarChart3, LineChart, Calendar, MessageSquare, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
+import { Home, BarChart3, LineChart, Brain, MessageSquare, Search, Beaker, Dna, ScanSearch } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import NeuralNetworksModal from './NeuralNetworksModal'
+import AnalyticsModal from './AnalyticsModal'
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -35,10 +37,21 @@ const NavItem = ({ icon, label, active, badge, onClick }: NavItemProps) => (
 
 export default function Sidebar() {
   const [activeItem, setActiveItem] = useState('analytics')
+  const [isNeuralNetworksModalOpen, setIsNeuralNetworksModalOpen] = useState(false)
+  const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false)
   const { t } = useLanguage()
 
   return (
-    <aside className="w-64 h-full bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 pb-8 flex flex-col overflow-y-auto">
+    <>
+      <NeuralNetworksModal
+        isOpen={isNeuralNetworksModalOpen}
+        onClose={() => setIsNeuralNetworksModalOpen(false)}
+      />
+      <AnalyticsModal
+        isOpen={isAnalyticsModalOpen}
+        onClose={() => setIsAnalyticsModalOpen(false)}
+      />
+      <aside className="w-64 h-full bg-white/40 backdrop-blur-xl border-r border-white/20 p-6 pb-8 flex flex-col overflow-y-auto">
       {/* Logo */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold gradient-text">{t.sidebar.title}</h1>
@@ -73,13 +86,19 @@ export default function Sidebar() {
           icon={<LineChart />}
           label="Analytics"
           active={activeItem === 'analytics'}
-          onClick={() => setActiveItem('analytics')}
+          onClick={() => {
+            setActiveItem('analytics')
+            setIsAnalyticsModalOpen(true)
+          }}
         />
         <NavItem
-          icon={<Calendar />}
-          label="Appointments"
-          active={activeItem === 'appointments'}
-          onClick={() => setActiveItem('appointments')}
+          icon={<Brain />}
+          label="Neural Networks"
+          active={activeItem === 'neural-networks'}
+          onClick={() => {
+            setActiveItem('neural-networks')
+            setIsNeuralNetworksModalOpen(true)
+          }}
         />
         <NavItem
           icon={<MessageSquare />}
@@ -132,5 +151,6 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   )
 }
