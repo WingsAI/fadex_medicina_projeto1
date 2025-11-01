@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { X, Image as ImageIcon, CheckCircle2, AlertTriangle, Clock, TrendingUp, Award, Eye, Calendar, Filter } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface AnalyticsModalProps {
   isOpen: boolean
@@ -119,6 +120,8 @@ const HistoryCard = ({ item }: { item: AnalysisHistoryItem }) => {
 }
 
 export default function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
+  const { t } = useLanguage()
+
   if (!isOpen) return null
 
   // Mock data - in production, this would come from API/state

@@ -155,5 +155,67 @@
   },
   "footer": {
     "text": "Plataforma Médica SNPQIM - Sistema Nacional de Qualidade de Imagens Médicas"
+  },
+  "modals": {
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Histórico completo de análises e insights",
+      "unreadNotifications": "notificação não lida",
+      "unreadNotificationsPlural": "notificações não lidas",
+      "allCaughtUp": "Tudo em dia!",
+      "newAlerts": "Novos Alertas",
+      "earlier": "Anteriores",
+      "totalAnalyzed": "Total Analisado",
+      "allTime": "Todo o período",
+      "averageScore": "Score Médio",
+      "qualityIndex": "Índice de qualidade",
+      "highQuality": "Alta Qualidade",
+      "successRate": "taxa de sucesso",
+      "processingTime": "Tempo de Processamento",
+      "averageDuration": "Duração média",
+      "recentAnalyses": "Análises Recentes",
+      "filter": "Filtrar",
+      "loadMore": "Carregar Mais Análises",
+      "score": "score"
+    },
+    "neuralNetworks": {
+      "title": "Redes Neurais",
+      "subtitle": "Modelos de IA para imagens médicas oftalmológicas",
+      "activeNetworks": "Redes Ativas",
+      "training": "Treinamento",
+      "maintenance": "Manutenção",
+      "active": "Ativa",
+      "accuracy": "Precisão",
+      "retinalAnalysis": "Análise de Retina",
+      "opticNerve": "Nervo Óptico",
+      "vascularAnalysis": "Análise Vascular",
+      "macularRegion": "Região Macular",
+      "glaucomaDetection": "Detecção de Glaucoma",
+      "qualityAssessment": "Avaliação de Qualidade",
+      "platformInfo": "Nossa plataforma utiliza redes neurais treinadas em mais de 500.000 imagens oftalmológicas anotadas de populações diversas. Todos os modelos passam por validação rigorosa e atendem aos padrões de precisão de grau clínico para assistência diagnóstica."
+    },
+    "alerts": {
+      "title": "Alertas",
+      "subtitle": "notificação não lida",
+      "subtitlePlural": "notificações não lidas",
+      "allCaughtUp": "Tudo em dia!",
+      "newAlerts": "Novos Alertas",
+      "earlier": "Anteriores",
+      "noAlertsYet": "Nenhum alerta ainda",
+      "noAlertsMessage": "Tudo em dia! Os alertas aparecerão aqui quando houver algo importante.",
+      "types": {
+        "critical": "Crítico",
+        "warning": "Aviso",
+        "info": "Informação",
+        "success": "Sucesso"
+      },
+      "lowQuality": "Baixa Qualidade Detectada",
+      "processingTimeExceeded": "Tempo de Processamento Excedido",
+      "batchCompleted": "Lote Concluído",
+      "newModelAvailable": "Novo Modelo Disponível",
+      "apiRateLimit": "Limite de API",
+      "qualityThreshold": "Limite de Qualidade Atingido",
+      "systemMaintenance": "Manutenção do Sistema"
+    }
   }
 }

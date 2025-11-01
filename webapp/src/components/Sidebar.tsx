@@ -148,21 +148,6 @@ export default function Sidebar() {
         />
       </nav>
 
-      {/* Connected Profiles */}
-      <div className="mb-6 shrink-0">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{t.sidebar.connectedProfiles}</span>
-          <button className="bg-black text-white text-xs px-3 py-1 rounded-full hover:bg-slate-800 transition-colors">
-            Add another
-          </button>
-        </div>
-        <div className="flex -space-x-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 border-2 border-white"></div>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-white"></div>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-white"></div>
-        </div>
-      </div>
-
       {/* AI-Powered Analytics */}
       <div className="bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl p-4 text-white shrink-0">
         <div className="flex items-center justify-between mb-3">

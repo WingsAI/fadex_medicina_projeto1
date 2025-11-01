@@ -155,5 +155,67 @@
   },
   "footer": {
     "text": "SNPQIM Medical Platform - National System for Medical Image Quality Standardization"
+  },
+  "modals": {
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Complete analysis history and insights",
+      "unreadNotifications": "unread notification",
+      "unreadNotificationsPlural": "unread notifications",
+      "allCaughtUp": "All caught up!",
+      "newAlerts": "New Alerts",
+      "earlier": "Earlier",
+      "totalAnalyzed": "Total Analyzed",
+      "allTime": "All time",
+      "averageScore": "Average Score",
+      "qualityIndex": "Quality index",
+      "highQuality": "High Quality",
+      "successRate": "success rate",
+      "processingTime": "Processing Time",
+      "averageDuration": "Average duration",
+      "recentAnalyses": "Recent Analyses",
+      "filter": "Filter",
+      "loadMore": "Load More Analyses",
+      "score": "score"
+    },
+    "neuralNetworks": {
+      "title": "Neural Networks",
+      "subtitle": "Medical Ophthalmology AI Models",
+      "activeNetworks": "Active Networks",
+      "training": "Training",
+      "maintenance": "Maintenance",
+      "active": "Active",
+      "accuracy": "Accuracy",
+      "retinalAnalysis": "Retinal Analysis",
+      "opticNerve": "Optic Nerve",
+      "vascularAnalysis": "Vascular Analysis",
+      "macularRegion": "Macular Region",
+      "glaucomaDetection": "Glaucoma Detection",
+      "qualityAssessment": "Quality Assessment",
+      "platformInfo": "Our neural networks are trained on over 500,000 annotated ophthalmological images from diverse populations. All models undergo rigorous validation and meet clinical-grade accuracy standards for diagnostic assistance."
+    },
+    "alerts": {
+      "title": "Alerts",
+      "subtitle": "unread notification",
+      "subtitlePlural": "unread notifications",
+      "allCaughtUp": "All caught up!",
+      "newAlerts": "New Alerts",
+      "earlier": "Earlier",
+      "noAlertsYet": "No alerts yet",
+      "noAlertsMessage": "You're all caught up! Alerts will appear here when there's something important.",
+      "types": {
+        "critical": "Critical",
+        "warning": "Warning",
+        "info": "Info",
+        "success": "Success"
+      },
+      "lowQuality": "Low Image Quality Detected",
+      "processingTimeExceeded": "Processing Time Exceeded",
+      "batchCompleted": "Batch Analysis Completed",
+      "newModelAvailable": "New Model Available",
+      "apiRateLimit": "API Rate Limit Warning",
+      "qualityThreshold": "Quality Threshold Met",
+      "systemMaintenance": "System Maintenance Scheduled"
+    }
   }
 }
