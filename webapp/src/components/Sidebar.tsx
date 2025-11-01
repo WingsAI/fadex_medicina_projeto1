@@ -113,12 +113,6 @@ export default function Sidebar() {
           onClick={() => setActiveItem('homepage')}
         />
         <NavItem
-          icon={<BarChart3 />}
-          label={t.sidebar.menu.statistics}
-          active={activeItem === 'statistics'}
-          onClick={() => setActiveItem('statistics')}
-        />
-        <NavItem
           icon={<LineChart />}
           label={t.sidebar.menu.analytics}
           active={activeItem === 'analytics'}
